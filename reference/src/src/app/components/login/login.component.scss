@@ -1,0 +1,62 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100vh;
+}
+
+// Ensure proper styling for form elements
+.space-y-2 > * + * {
+  margin-top: 0.5rem;
+}
+
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+.space-y-6 > * + * {
+  margin-top: 1.5rem;
+}
+
+// Button hover states
+button:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+// Input focus states
+input:focus {
+  outline: none;
+  border-color: var(--color-ring);
+  box-shadow: 0 0 0 2px var(--color-ring);
+}
+
+// Loading state for submit button
+button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+// Responsive adjustments
+@media (max-width: 1024px) {
+  .hidden.lg\\:flex {
+    display: none !important;
+  }
+}
+
+// Custom scrollbar for overflow areas
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-muted);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted-foreground);
+}
