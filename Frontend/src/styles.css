@@ -1,0 +1,23 @@
+
+
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+@import "tailwindcss";
+
+/* If you are not using PostCSS with Tailwind, remove these lines and import the compiled Tailwind CSS instead */
+/* @tailwind base; */
+/* @tailwind components; */
+/* @tailwind utilities; */
+
+/* You can keep your global overrides here */
+
+:root {
+  --font-family: 'Inter', sans-serif;
+}
+
+html,
+body {
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

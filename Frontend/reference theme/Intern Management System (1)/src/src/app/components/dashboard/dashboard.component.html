@@ -1,0 +1,239 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex justify-between items-center">
+    <div>
+      <h1 class="text-2xl font-semibold">Dashboard</h1>
+      <p class="text-muted-foreground">Welcome to your intern management dashboard</p>
+    </div>
+    <button
+      (click)="openAddInternDialog()"
+      class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+    >
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+      </svg>
+      Add New Intern
+    </button>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <!-- Total Interns -->
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+      <div class="flex flex-row items-center justify-between space-y-0 pb-2">
+        <h3 class="tracking-tight text-sm font-medium">Total Interns</h3>
+        <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+        </svg>
+      </div>
+      <div>
+        <div class="text-2xl font-bold">{{ internService.totalInterns() }}</div>
+        <p class="text-xs text-muted-foreground">
+          +2 from last month
+        </p>
+      </div>
+    </div>
+
+    <!-- Active Interns -->
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+      <div class="flex flex-row items-center justify-between space-y-0 pb-2">
+        <h3 class="tracking-tight text-sm font-medium">Active Interns</h3>
+        <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <div>
+        <div class="text-2xl font-bold">{{ internService.activeInterns() }}</div>
+        <p class="text-xs text-muted-foreground">
+          Currently working
+        </p>
+      </div>
+    </div>
+
+    <!-- Applications -->
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+      <div class="flex flex-row items-center justify-between space-y-0 pb-2">
+        <h3 class="tracking-tight text-sm font-medium">New Applications</h3>
+        <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      </div>
+      <div>
+        <div class="text-2xl font-bold">12</div>
+        <p class="text-xs text-muted-foreground">
+          +5 this week
+        </p>
+      </div>
+    </div>
+
+    <!-- Completion Rate -->
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+      <div class="flex flex-row items-center justify-between space-y-0 pb-2">
+        <h3 class="tracking-tight text-sm font-medium">Completion Rate</h3>
+        <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      </div>
+      <div>
+        <div class="text-2xl font-bold">89%</div>
+        <p class="text-xs text-muted-foreground">
+          +12% from last month
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions & Recent Activity -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Quick Actions -->
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+      <div class="mb-4">
+        <h3 class="font-semibold leading-none tracking-tight">Quick Actions</h3>
+        <p class="text-sm text-muted-foreground">Common tasks and shortcuts</p>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <button
+          (click)="onNavigate('interns')"
+          class="flex flex-col items-center gap-2 p-4 rounded-lg border hover:bg-accent transition-colors"
+        >
+          <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+          </svg>
+          <span class="text-sm font-medium">Manage Interns</span>
+        </button>
+
+        <button
+          (click)="onNavigate('applications')"
+          class="flex flex-col items-center gap-2 p-4 rounded-lg border hover:bg-accent transition-colors"
+        >
+          <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <span class="text-sm font-medium">Review Applications</span>
+        </button>
+
+        <button
+          (click)="onNavigate('tasks')"
+          class="flex flex-col items-center gap-2 p-4 rounded-lg border hover:bg-accent transition-colors"
+        >
+          <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+          </svg>
+          <span class="text-sm font-medium">Assign Tasks</span>
+        </button>
+
+        <button
+          (click)="onNavigate('evaluations')"
+          class="flex flex-col items-center gap-2 p-4 rounded-lg border hover:bg-accent transition-colors"
+        >
+          <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+          </svg>
+          <span class="text-sm font-medium">Performance Review</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+      <div class="mb-4">
+        <h3 class="font-semibold leading-none tracking-tight">Recent Activity</h3>
+        <p class="text-sm text-muted-foreground">Latest updates and changes</p>
+      </div>
+      <div class="space-y-3">
+        @for (activity of getRecentActivities(); track activity.activity) {
+          <div class="flex items-center gap-3">
+            <div class="w-2 h-2 rounded-full" 
+                 [class.bg-blue-500]="activity.type === 'application'"
+                 [class.bg-green-500]="activity.type === 'task'"
+                 [class.bg-orange-500]="activity.type === 'evaluation'"
+                 [class.bg-purple-500]="activity.type === 'document'">
+            </div>
+            <div class="flex-1">
+              <p class="text-sm font-medium">{{ activity.activity }}</p>
+              <p class="text-xs text-muted-foreground">{{ activity.time }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Interns & Upcoming Tasks -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Recent Interns -->
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+      <div class="mb-4">
+        <h3 class="font-semibold leading-none tracking-tight">Recent Interns</h3>
+        <p class="text-sm text-muted-foreground">Newly added interns</p>
+      </div>
+      <div class="space-y-3">
+        @for (intern of getRecentInterns(); track intern.id) {
+          <div class="flex items-center justify-between p-3 border rounded-lg">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
+                <span class="text-sm font-medium">{{ intern.avatar }}</span>
+              </div>
+              <div>
+                <p class="font-medium text-sm">{{ intern.name }}</p>
+                <p class="text-xs text-muted-foreground">{{ intern.position }}</p>
+              </div>
+            </div>
+            <span class="px-2 py-1 text-xs rounded-full"
+                  [class.bg-green-100]="intern.status === 'active'"
+                  [class.text-green-800]="intern.status === 'active'"
+                  [class.bg-blue-100]="intern.status === 'onboarding'"
+                  [class.text-blue-800]="intern.status === 'onboarding'"
+                  [class.bg-gray-100]="intern.status === 'completed'"
+                  [class.text-gray-800]="intern.status === 'completed'">
+              {{ intern.status }}
+            </span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Upcoming Tasks -->
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+      <div class="mb-4">
+        <h3 class="font-semibold leading-none tracking-tight">Upcoming Tasks</h3>
+        <p class="text-sm text-muted-foreground">Tasks requiring attention</p>
+      </div>
+      <div class="space-y-3">
+        @for (task of getUpcomingTasks(); track task.title) {
+          <div class="flex items-center justify-between p-3 border rounded-lg">
+            <div class="flex-1">
+              <p class="font-medium text-sm">{{ task.title }}</p>
+              <p class="text-xs text-muted-foreground">Due: {{ task.dueDate }}</p>
+            </div>
+            <span class="px-2 py-1 text-xs rounded-full"
+                  [class.bg-red-100]="task.priority === 'high'"
+                  [class.text-red-800]="task.priority === 'high'"
+                  [class.bg-yellow-100]="task.priority === 'medium'"
+                  [class.text-yellow-800]="task.priority === 'medium'"
+                  [class.bg-green-100]="task.priority === 'low'"
+                  [class.text-green-800]="task.priority === 'low'">
+              {{ task.priority }}
+            </span>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Intern Dialog (Placeholder) -->
+@if (showAddInternDialog) {
+  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+      <h3 class="text-lg font-semibold mb-4">Add New Intern</h3>
+      <p class="text-muted-foreground mb-4">This dialog would contain the add intern form.</p>
+      <button
+        (click)="closeAddInternDialog()"
+        class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+}

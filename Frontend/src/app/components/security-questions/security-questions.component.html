@@ -1,0 +1,21 @@
+<div class="container">
+  <h2>Set Security Questions</h2>
+  <form [formGroup]="questionsForm" (ngSubmit)="onSubmit()">
+    <div formArrayName="questions">
+      <div *ngFor="let question of questionsArray.controls; let i = index" [formGroupName]="i">
+        <div class="form-group">
+          <label for="question-{{ i }}">Question {{ i + 1 }}</label>
+          <select formControlName="question" id="question-{{ i }}" class="form-control">
+            <option value="">-- Select a question --</option>
+            <option *ngFor="let q of questions" [value]="q">{{ q }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="answer-{{ i }}">Answer</label>
+          <input type="text" formControlName="answer" id="answer-{{ i }}" class="form-control">
+        </div>
+      </div>
+    </div>
+    <button type="submit" [disabled]="questionsForm.invalid" class="btn btn-primary">Save</button>
+  </form>
+</div>

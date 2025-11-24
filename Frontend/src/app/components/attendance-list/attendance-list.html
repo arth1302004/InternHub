@@ -1,0 +1,39 @@
+<div class="attendance-container">
+  <h1>Attendance</h1>
+  
+  <div class="table-container">
+    <table class="attendance-table">
+      <thead>
+        <tr>
+          <th *ngIf="isAdmin()">Name</th>
+          <th>Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="isLoading">
+          <td [attr.colspan]="isAdmin() ? 3 : 2" class="loading-text">Loading attendance data...</td>
+        </tr>
+        <tr *ngIf="!isLoading && attendanceData().length === 0">
+          <td [attr.colspan]="isAdmin() ? 3 : 2" class="no-data-text">No attendance records found.</td>
+        </tr>
+        <tr *ngFor="let record of attendanceData()">
+          <td *ngIf="isAdmin()" class="name-cell">
+            <img [src]="record.internProfileImageUrl" alt="Profile" class="profile-image" onerror="this.src='https://via.placeholder.com/40'">
+            {{ record.internName }}
+          </td>
+          <td>{{ formatDate(record.date) }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="getStatusClass(record.status)">{{ record.status }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination-controls" *ngIf="!isLoading && totalPages > 1">
+    <button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+</div>

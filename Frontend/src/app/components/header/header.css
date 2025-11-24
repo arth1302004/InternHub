@@ -1,0 +1,237 @@
+.hamburger-menu {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 16px;
+}
+
+/* Header wrapper */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  white-space: nowrap;
+  border-bottom: 1px solid #e7edf4;
+  padding: 12px 40px;
+  background-color: #f8fafc; /* slate-50 */
+}
+
+/* Left section */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+/* Logo & Title */
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #0d141c;
+}
+
+.logo {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  color: currentColor;
+}
+
+.logo-title h2 {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+/* Navigation */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  color: #0d141c;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Right section */
+.header-right {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  gap: 32px;
+}
+
+/* Search box */
+.search-box {
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+  max-width: 256px;
+  height: 40px;
+}
+
+.search-inner {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.search-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e7edf4;
+  padding-left: 16px;
+  color: #49739c;
+}
+
+.search-inner input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background-color: #e7edf4;
+  padding: 0 16px;
+  color: #0d141c;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.search-inner input::placeholder {
+  color: #49739c;
+}
+
+/* Profile picture */
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.profile-dropdown {
+  position: relative;
+  display: inline-block;
+  min-width: 40px;
+  min-height: 40px;
+  margin-left: auto;
+}
+
+.profile-card {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  right: 0;
+}
+
+.profile-dropdown:hover .profile-card {
+  display: block;
+}
+
+.profile-card .username {
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.profile-card button {
+  width: 100%;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.profile-card button:hover {
+  background-color: #ddd;
+}
+
+/* Clock-in button styles */
+.clock-in-button {
+  background-color: #e7edf4; /* Light background, similar to search */
+  color: #0d141c; /* Dark text, similar to main text */
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px; /* Match other rounded elements */
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease; /* Smooth transition on hover */
+}
+
+.clock-in-button:hover {
+  background-color: #dbe3ed; /* Slightly darker on hover */
+}
+
+.clock-in-button:disabled {
+  background-color: #cccccc; /* Grey out when disabled */
+  color: #666666;
+  cursor: not-allowed;
+}
+
+.password-reset-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+}
+
+.password-reset-message span {
+  margin-right: 1rem;
+}
+
+.password-reset-message .reset-now-btn {
+  background-color: #721c24;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.password-reset-message .cancel-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #721c24;
+}

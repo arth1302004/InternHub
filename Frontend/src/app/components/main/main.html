@@ -1,0 +1,7 @@
+<app-sidebar *ngIf="!isModalOpen"></app-sidebar>
+<app-header *ngIf="!isModalOpen"></app-header>
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>
+<app-loading-spinner></app-loading-spinner>
+    

@@ -1,0 +1,246 @@
+/* Container and card base */
+.card {
+  background: #fff;
+  border: 1px solid #D1D5DB; /* Light grey border */
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(16,24,40,0.03);
+}
+
+/* Stats cards specifically */
+.stat-card {
+  min-height: 86px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Titles / values */
+.stat-title {
+  font-size: 0.85rem;
+  color: #6b7280; /* muted */
+  margin-bottom: 0.25rem;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a; /* near black */
+  margin-bottom: 0.25rem;
+}
+
+.stat-change {
+  font-size: 0.75rem;
+  color: #10b981; /* green as screenshot */
+}
+
+/* Icon container on stat card */
+.stat-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(180deg, rgba(245,246,252,0.6), rgba(255,255,255,0.6));
+}
+
+/* size & stroke for feather icons */
+.stat-icon, .activity-icon {
+  width: 28px;
+  height: 28px;
+  stroke-width: 1.8;
+}
+
+/* Icon color helpers (keeps your [ngClass]="stat.color" working) */
+.text-blue-600 { color: #2563eb; }
+.text-orange-600 { color: #f97316; }
+.text-green-600 { color: #10b981; }
+.text-purple-600 { color: #7c3aed; }
+
+/* Card header & title */
+.card-header {
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(16,24,40,0.04);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* card-content area */
+.card-content {
+  padding: 18px 20px;
+}
+
+/* small button styles */
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+  display:flex;
+  align-items:center;
+  gap: 8px;
+}
+
+.btn-sm {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid #D1D5DB;
+  color: #0f172a;
+}
+
+/* Primary quick-action button on left - large dark button */
+.primary-action {
+  background: linear-gradient(180deg,#05040a,#0a0611);
+  color: #fff;
+  border: none;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Activity rows */
+.activity-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.activity-row:hover {
+  background: rgba(249,250,251,0.6);
+}
+
+/* left part of activity row */
+.activity-left {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  min-width: 0;
+}
+
+/* icon bg circle */
+.activity-icon-bg {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.activity-icon {
+  width:16px;
+  height:16px;
+  stroke-width:1.6;
+  color: #374151;
+}
+
+/* text */
+.activity-message {
+  font-size: 0.95rem;
+  color: #0f172a;
+  margin-bottom: 2px;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-time {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* Badge base */
+.badge {
+  display:inline-flex;
+  align-items:center;
+  padding:6px 10px;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight:600;
+  min-width: 64px;
+  justify-content:center;
+}
+
+/* specific badge colors that match screenshot */
+.badge-default {
+  background: #0f172a;
+  color: #fff;
+}
+
+.badge-secondary {
+  background: #eef2ff;
+  color: #6366f1;
+  border: 1px solid rgba(99,102,241,0.12);
+}
+
+.badge-destructive {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid rgba(185,28,28,0.08);
+}
+
+.badge-outline {
+  background: transparent;
+  color: #374151;
+  border: 1px solid rgba(16,24,40,0.06);
+}
+
+/* Deadline row */
+.deadline-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(16,24,40,0.03);
+  background: #fff;
+}
+
+/* priority dot */
+.priority-dot {
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  margin-top:6px;
+}
+.priority-dot.high { background:#ef4444; }
+.priority-dot.medium { background:#f59e0b; }
+.priority-dot.low { background:#10b981; }
+
+.deadline-task {
+  font-weight:600;
+  font-size:0.95rem;
+}
+
+.deadline-intern {
+  font-size:0.85rem;
+  color:#6b7280;
+}
+
+.deadline-due {
+  font-size:0.9rem;
+  color:#0f172a;
+}
+
+/* quick action button general */
+.quick-action {
+  text-align:center;
+}
+
+/* small responsive tweaks */
+@media (max-width: 1024px) {
+  .stat-value { font-size: 1.25rem; }
+  .stat-icon-wrap { width:48px; height:48px; }
+}

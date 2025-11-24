@@ -1,0 +1,156 @@
+<div class="p-8 bg-gray-50 min-h-screen" [ngClass]="{'blur-sm': isModalOpen}">
+  <div class="flex justify-between items-center mb-8" *ngIf="!isModalOpen">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800">Admin Approval Center</h1>
+        <p class="text-gray-500 mt-1">Final hiring decisions and application approvals</p>
+      </div>
+      <div class="flex items-center space-x-3">
+        <a routerLink="/application"
+          class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg flex items-center space-x-2 text-sm font-medium">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3h2m-4 3h2m-4 3h2m-4 3h2m-4 3h2m-4 3h2">
+            </path>
+          </svg>
+          <span>All Applications</span>
+        </a>
+        <button class="bg-gray-800 text-white px-4 py-2 rounded-lg flex items-center space-x-2 text-sm font-medium">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 20.944a12.02 12.02 0 009 2.056c4.505 0 8.31-2.944 9.618-7.016a11.955 11.955 0 00-2.001-8.984z">
+            </path>
+          </svg>
+          <span>Admin Approvals</span>
+        </button>
+      </div>
+    </div>
+
+  <!-- Statistics Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+    <div class="bg-white rounded-lg shadow-sm p-6 flex items-center justify-between">
+      <div>
+        <p class="text-gray-500 text-sm">Pending Approval</p>
+        <p class="text-2xl font-bold text-gray-800">{{ approvalStats.pendingApproval }}</p>
+      </div>
+      <div class="text-orange-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm p-6 flex items-center justify-between">
+      <div>
+        <p class="text-gray-500 text-sm">Approved Today</p>
+        <p class="text-2xl font-bold text-gray-800">{{ approvalStats.approvedToday }}</p>
+      </div>
+      <div class="text-green-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm p-6 flex items-center justify-between">
+      <div>
+        <p class="text-gray-500 text-sm">Total Hired</p>
+        <p class="text-2xl font-bold text-gray-800">{{ approvalStats.totalHired }}</p>
+      </div>
+      <div class="text-blue-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h2a2 2 0 002-2V7a2 2 0 00-2-2h-2.5a1.5 1.5 0 01-1.5-1.5V3a1.5 1.5 0 00-1.5-1.5h-5A1.5 1.5 0 006.5 3v1.5A1.5 1.5 0 015 6.5H3a2 2 0 00-2 2v10a2 2 0 002 2h2M7.5 14.5h7M12 17.5h.01" />
+        </svg>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm p-6 flex items-center justify-between">
+      <div>
+        <p class="text-gray-500 text-sm">Approval Rate</p>
+        <p class="text-2xl font-bold text-gray-800">{{ approvalStats.approvalRate }}</p>
+      </div>
+      <div class="text-purple-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pending Admin Approvals -->
+  <div class="bg-white rounded-lg shadow-sm mt-8 p-6">
+    <h2 class="text-lg font-semibold text-gray-800 flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      Pending Admin Approvals ({{ pendingApprovals.length }})
+    </h2>
+    <p class="text-gray-500 text-sm mt-1">Applications approved by HR awaiting final admin decision</p>
+
+    <div *ngIf="pendingApprovals.length === 0" class="text-center py-16 text-gray-500">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto mb-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 20.944a12.02 12.02 0 009 2.056c4.505 0 8.31-2.944 9.618-7.016a11.955 11.955 0 00-2.001-8.984z" />
+      </svg>
+      <p>No pending approvals</p>
+      <p class="text-sm">All applications have been processed or are still in HR review.</p>
+    </div>
+
+    <div *ngIf="pendingApprovals.length > 0" class="mt-4">
+      <div *ngFor="let approval of pendingApprovals" class="flex items-center justify-between border-b border-gray-200 py-3 last:border-b-0">
+        <div class="flex items-center">
+          <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-bold text-sm mr-3">
+            <img *ngIf="approval.profilePicUrl && !approval.showInitialsFallback" [src]="approval.profilePicUrl" (error)="onProfilePicError(approval)" class="w-full h-full object-cover rounded-full" alt="Profile Pic">
+            <span *ngIf="!approval.profilePicUrl || approval.showInitialsFallback">{{ getInitials(approval.fullName) }}</span>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-800">{{ approval.fullName }}</p>
+            <p class="text-sm text-gray-500">{{ approval.internshipRole }} • {{ approval.university }} • {{ approval.rating }}</p>
+            <p class="text-sm text-gray-700 mt-1"><span class="font-semibold">HR Recommendation:</span> {{ approval.hrRecommendation }}</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="bg-orange-100 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Awaiting Admin Decision</span>
+          <button (click)="onAdminReview(approval.id)" class="bg-gray-800 text-white px-3 py-1 rounded-lg text-xs font-medium flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+            Admin Review
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Admin Decisions -->
+  <div class="bg-white rounded-lg shadow-sm mt-8 p-6">
+    <h2 class="text-lg font-semibold text-gray-800 flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+      </svg>
+      Recent Admin Decisions
+    </h2>
+    <p class="text-gray-500 text-sm mt-1">Latest hiring decisions made by admin team</p>
+
+    <div *ngIf="recentDecisions.length === 0" class="text-center py-16 text-gray-500">
+      <p>No recent decisions.</p>
+    </div>
+
+    <div *ngIf="recentDecisions.length > 0" class="mt-4">
+      <div *ngFor="let decision of recentDecisions" class="flex items-center justify-between border-b border-gray-200 py-3 last:border-b-0">
+        <div class="flex items-center">
+          <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-bold text-sm mr-3">
+            <img *ngIf="decision.profilePicUrl && !decision.showInitialsFallback" [src]="decision.profilePicUrl" (error)="onProfilePicError(decision)" class="w-full h-full object-cover rounded-full" alt="Profile Pic">
+            <span *ngIf="!decision.profilePicUrl || decision.showInitialsFallback">{{ getInitials(decision.fullName) }}</span>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-800">{{ decision.fullName }}</p>
+            <p class="text-sm text-gray-500">{{ decision.internshipRole }} • {{ decision.date }}</p>
+          </div>
+        </div>
+        <span [ngClass]="{
+          'bg-green-100 text-green-800': decision.status === 'Approved',
+          'bg-red-100 text-red-800': decision.status === 'Rejected'
+        }" class="text-xs font-medium px-2.5 py-0.5 rounded-full">{{ decision.status }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+<app-application-preview *ngIf="selectedApplication" [selectedApplication]="selectedApplication" (close)="closePreview()"></app-application-preview>

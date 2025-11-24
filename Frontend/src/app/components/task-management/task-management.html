@@ -1,0 +1,155 @@
+<div class="task-management-container">
+  <header>
+    <div class="header-title">
+      <h1>Task Management</h1>
+      <p>Assign and track intern tasks</p>
+    </div>
+    <button class="create-task-btn" (click)="openCreateTaskModal()">+ Create Task</button>
+  </header>
+
+  <div class="filters">
+    <input type="text" placeholder="Search tasks..." [(ngModel)]="searchTerm" (ngModelChange)="applyFilters()">
+    <select [(ngModel)]="selectedStatus" (ngModelChange)="applyFilters()">
+      <option value="all">All Statuses</option>
+      <option value="to-do">To Do</option>
+      <option value="in-progress">In Progress</option>
+      <option value="completed">Completed</option>
+      <option value="overdue">Overdue</option>
+    </select>
+    <select [(ngModel)]="selectedPriority" (ngModelChange)="applyFilters()">
+      <option value="all">All Priorities</option>
+      <option value="high">High</option>
+      <option value="medium">Medium</option>
+      <option value="low">Low</option>
+    </select>
+  </div>
+
+  <div class="status-summary">
+    <div class="summary-card">
+      <div class="number to-do">{{ toDoCount }}</div>
+      <div class="label">To Do</div>
+    </div>
+    <div class="summary-card">
+      <div class="number in-progress">{{ inProgressCount }}</div>
+      <div class="label">In Progress</div>
+    </div>
+    <div class="summary-card">
+      <div class="number completed">{{ completedCount }}</div>
+      <div class="label">Completed</div>
+    </div>
+    <div class="summary-card">
+      <div class="number overdue">{{ overdueCount }}</div>
+      <div class="label">Overdue</div>
+    </div>
+  </div>
+
+  <div class="task-grid">
+    <div class="task-card" *ngFor="let task of filteredTasks">
+      <div class="task-card-header">
+        <h3>{{ task.taskName }}</h3>
+        <div class="dropdown">
+          <button class="more-btn">&#8942;</button>
+          <div class="dropdown-content">
+            <a (click)="openViewTaskModal(task.taskId)">View</a>
+            <a>Edit</a>
+            <a>Reassign</a>
+            <a (click)="deleteTask(task.taskId)" class="delete">Delete</a>
+          </div>
+        </div>
+      </div>
+      <p class="description">{{ task.description }}</p>
+      <div class="task-meta">
+        <span class="status" [ngClass]="task.status.toLowerCase().replace(' ', '-')">{{ task.status }}</span>
+        <span class="priority" [ngClass]="task.priority.toLowerCase()">{{ task.priority }}</span>
+      </div>
+      <div class="assignees">{{ formatAssignees(task) }}</div>
+      <div class="due-date">Due {{ task.dueDate | date: 'M/d/yyyy' }}</div>
+      <div class="progress">
+        <div class="progress-bar" [style.width.%]="task.progress"></div>
+      </div>
+      <div class="tags">
+        <span *ngFor="let tag of task.tags">{{ tag }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Task Modal -->
+  <div class="modal-overlay" *ngIf="isCreateTaskModalOpen">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Create New Task</h2>
+        <button class="close-btn" (click)="closeCreateTaskModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="createTaskForm" (ngSubmit)="onSubmitCreateTask()">
+          <label>Task Title</label>
+          <input formControlName="taskName" placeholder="Enter task title...">
+          <label>Description</label>
+          <textarea formControlName="description" placeholder="Enter task description..."></textarea>
+          <label>Assignees</label>
+          <select multiple formControlName="assigneeIds">
+            <option *ngFor="let intern of interns" [value]="intern.internId">{{ intern.name }}</option>
+          </select>
+          <label>Priority</label>
+          <select formControlName="priority">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+          <label>Due Date</label>
+          <input type="date" formControlName="dueDate">
+          <label>Estimated Hours</label>
+          <input type="number" formControlName="estimatedHours" placeholder="0">
+          <label>Tags</label>
+          <input formControlName="tags" placeholder="e.g., Frontend, React, API">
+          <div class="modal-footer">
+            <button type="button" class="cancel-btn" (click)="closeCreateTaskModal()">Cancel</button>
+            <button type="submit" class="create-btn">Create Task</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- View Task Modal -->
+  <div class="modal-overlay" *ngIf="isViewTaskModalOpen">
+    <div class="modal view-task-modal" *ngIf="selectedTask">
+      <div class="modal-header">
+        <h2>{{ selectedTask.taskName }}</h2>
+        <button class="close-btn" (click)="closeViewTaskModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="task-details-grid">
+          <div class="main-content">
+            <h4>Description</h4>
+            <p>{{ selectedTask.description }}</p>
+            <h4>Attachments ({{ selectedTask.attachments?.length || 0 }})</h4>
+            <!-- Add attachment list if available -->
+          </div>
+          <div class="sidebar">
+            <h4>Status</h4>
+            <span class="status" [ngClass]="selectedTask.status.toLowerCase().replace(' ', '-')">{{ selectedTask.status }}</span>
+            <h4>Priority</h4>
+            <span class="priority" [ngClass]="selectedTask.priority.toLowerCase()">{{ selectedTask.priority }}</span>
+            <h4>Tags</h4>
+            <div class="tags">
+              <span *ngFor="let tag of selectedTask.tags">{{ tag }}</span>
+            </div>
+            <h4>Task Information</h4>
+            <p>Created by {{ selectedTask.createdBy || 'John Smith' }} {{ selectedTask.department || 'Engineering' }}</p>
+            <p>Created: {{ selectedTask.createdDate ? (selectedTask.createdDate | date: 'M/d/yyyy') : '2/15/2025' }}</p>
+            <p>Due Date: {{ selectedTask.dueDate | date: 'M/d/yyyy' }}</p>
+            <h4>Time Tracking</h4>
+            <p>Estimated: {{ selectedTask.estimatedHours }}h</p>
+            <p>Actual: {{ selectedTask.actualHours || '24' }}h</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="edit-btn">Edit Task</button>
+        <button class="reassign-btn">Reassign</button>
+        <button class="close-btn" (click)="closeViewTaskModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

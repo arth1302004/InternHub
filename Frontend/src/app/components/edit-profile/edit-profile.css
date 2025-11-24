@@ -1,0 +1,326 @@
+/* Container styles */
+.relative {
+  position: relative;
+}
+
+.flex {
+  display: flex;
+}
+
+.size-full {
+  width: 100%;
+  height: 100%;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.bg-\[\#fcfcf8\] {
+  background-color: #fcfcf8;
+}
+
+/* Group variant for design root */
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+/* Layout container */
+.layout-container {
+  height: 100%;
+  flex-grow: 1;
+}
+
+/* Header styles */
+header {
+  border-bottom: 1px solid #f4f4e6;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
+.border-b {
+  border-bottom-width: 1px;
+}
+
+.border-solid {
+  border-style: solid;
+}
+
+.border-b-\[\#f4f4e6\] {
+  border-bottom-color: #f4f4e6;
+}
+
+.px-10 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+/* Main content area */
+.px-40 {
+  padding-left: 10rem;
+  padding-right: 10rem;
+}
+
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+/* Layout content container */
+.layout-content-container {
+  max-width: 960px;
+  flex: 1;
+}
+
+/* Title section */
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-3 {
+  gap: 0.75rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.min-w-72 {
+  min-width: 18rem;
+}
+
+.gap-3 {
+  gap: 0.75rem;
+}
+
+.text-\[\#1c1c0d\] {
+  color: #1c1c0d;
+}
+
+.tracking-light {
+  letter-spacing: -0.015em;
+}
+
+.text-\[32px\] {
+  font-size: 32px;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.leading-tight {
+  line-height: 1.25;
+}
+
+.text-\[\#9e9d47\] {
+  color: #9e9d47;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.font-normal {
+  font-weight: 400;
+}
+
+.leading-normal {
+  line-height: 1.5;
+}
+
+
+.w-full {
+  width: 100%;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+/* Profile image section */
+.items-center {
+  align-items: center;
+}
+
+.bg-center {
+  background-position: center;
+}
+
+.bg-no-repeat {
+  background-repeat: no-repeat;
+}
+
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
+.bg-cover {
+  background-size: cover;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.min-h-32 {
+  min-height: 8rem;
+}
+
+.w-32 {
+  width: 8rem;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.tracking-\[0\.015em\] {
+  letter-spacing: 0.015em;
+}
+
+/* Form grid */
+.grid {
+  display: grid;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.sm\:grid-cols-2 {
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.gap-1 {
+  gap: 0.25rem;
+}
+
+/* Input fields */
+.w-full {
+  width: 100%;
+}
+
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.border {
+  border-width: 1px;
+}
+
+.border-gray-300 {
+  border-color: #D1D5DB;
+}
+
+.rounded-md {
+  border-radius: 0.375rem;
+}
+
+.shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.focus\:ring-indigo-500:focus {
+  --tw-ring-color: #6366F1;
+  box-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+}
+
+.focus\:border-indigo-500:focus {
+  border-color: #6366F1;
+}
+
+/* Button section */
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.h-10 {
+  height: 2.5rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.bg-\[\#f4f4e6\] {
+  background-color: #f4f4e6;
+}
+
+.text-white {
+  color: #FFFFFF;
+}
+
+.disabled\:bg-gray-400:disabled {
+  background-color: #9CA3AF;
+}
+
+/* Error messages */
+.text-red-500 {
+  color: #EF4444;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+}

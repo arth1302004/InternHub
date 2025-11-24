@@ -1,0 +1,268 @@
+
+  <body>
+    <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: "Spline Sans", "Noto Sans", sans-serif;'>
+      <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-gray-200 px-10 py-3">
+        </header>
+        <div class="px-5 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-width-[1500px] flex-1">
+            <!-- Loading state -->
+            <div *ngIf="loading()" class="flex justify-center items-center h-64">
+              <p class="text-black text-lg">Loading profile data...</p>
+            </div>
+
+            <!-- Error state -->
+            <div *ngIf="error() && !loading()" class="flex justify-center items-center h-64">
+              <p class="text-red-500 text-lg">{{ error() }}</p>
+            </div>
+
+            <!-- Profile content -->
+            <div *ngIf="!loading() && userData() && !error()">
+              <!-- Admin Profile -->
+              <div *ngIf="isAdmin()">
+                <div class="flex flex-wrap justify-between gap-3 p-4">
+                  <div class="flex min-w-72 flex-col gap-3">
+                    <p class="text-black tracking-light text-[32px] font-bold leading-tight">Admin Profile</p>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <p><strong>Name:</strong> {{ userData().name }}</p>
+                  <p><strong>Email:</strong> {{ userData().email }}</p>
+                  <p><strong>Admin ID:</strong> {{ userData().id }}</p>
+                </div>
+              </div>
+
+              <!-- Intern Profile -->
+              <div *ngIf="!isAdmin()">
+                <div class="flex flex-wrap justify-between gap-3 p-4">
+                  <div class="flex min-w-72 flex-col gap-3">
+                    <p class="text-black tracking-light text-[32px] font-bold leading-tight">My Profile</p>
+                  </div>
+                </div>
+                <div class="flex p-4 @container">
+                  <div class="flex w-full flex-col gap-4 @[520px]:flex-row @[520px]:justify-between @[520px]:items-center">
+                    <div class="flex gap-4">
+                      <div
+                        class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32 cursor-pointer"
+                        [style.background-image]="'url(' + (userData().profileImageUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuAhCKvdgaoxhipKxPlIp9tfM2NSnVZ1vFNDS0M_SJgo0FpVRyBdwH4z8wAE6kdW8-J6PTpk_uAQHVzoJAaIdLOIYa0VcVCVJ6FDyk0NtZJ4rdsM7cU5CKTRKFOdH2kkZk3i99kUGSMm-iNqwyz6TE1BUOBYOpAv9BDdob7gq0kYi5oidEyuUU04-TYMNompPZOWgWP5ibC4_Pn4au5ETbAGlY9b9423DSwYI0EK73Gyf7n8zUm-_Sw-OcNn7s7JtkhfTHiPKT7_lA') + ')'"
+                        (click)="showImagePopup()"
+                      ></div>
+                      <div class="flex flex-col justify-center">
+                        <p class="text-black text-[22px] font-bold leading-tight tracking-[-0.015em]">
+                          {{ userData().name }}
+                        </p>
+                        <p class="text-gray-500 text-base font-normal leading-normal">
+                          {{ userData().emailAddress }}
+                        </p>
+                        <p class="text-gray-500 text-base font-normal leading-normal">
+                          {{ userData().role }}
+                        </p>
+                      </div>
+                      <div *ngIf="isOwnProfile() || isAdmin()">
+                        <button
+                      (click)="goToEditProfile()"
+                      class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-gray-100 text-black text-sm font-bold leading-normal tracking-[0.015em] w-full max-w-[480px] @[480px]:w-auto"
+                    >
+                      <span class="truncate">Edit Profile</span>
+                    </button>
+                      </div>
+                      <div *ngIf="isOwnProfile() || isAdmin()">
+                        <button
+                      (click)="goToResetPassword()"
+                      class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-gray-100 text-black text-sm font-bold leading-normal tracking-[0.015em] w-full max-w-[480px] @[480px]:w-auto"
+                    >
+                      <span class="truncate">Reset Password</span>
+                    </button>
+                      </div>
+                    </div>
+                    
+                    
+                  </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                  <!-- Personal Information -->
+                  <div class="card col-span-2">
+                    <h2 class="text-black text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Personal Information</h2>
+                    <div class="p-4 grid grid-cols-2 gap-4">
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pr-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Name</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().name }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pl-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Date of Birth</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().dateOfBirth | date:'mediumDate' }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pr-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Gender</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().gender | titlecase }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pl-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Nationality</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().nationality | titlecase }}</p>
+                      </div>
+                      <div class="col-span-2 flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Address</p>
+                        <p class="text-black text-sm font-normal leading-normal whitespace-pre-line">{{ userData().address }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Contact Information -->
+                  <div class="card">
+                    <h2 class="text-black text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Contact Information</h2>
+                    <div class="p-4 grid grid-cols-2 gap-4">
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pr-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Email Address</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().emailAddress }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pl-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Contact Number</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().contactNumber }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pr-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Emergency Contact</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().emergencyContact }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pl-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Intern ID</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().internId }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Academic Information -->
+                  <div class="card">
+                    <h2 class="text-black text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Academic Information</h2>
+                    <div class="p-4 grid grid-cols-2 gap-4">
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pr-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">University</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().universityName }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pl-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Education Level</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().educationLevel }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pr-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Degree</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().degree }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pl-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Major/Field</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().degree }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pr-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Year of Study</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().yearOfStudy }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pl-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Enrollment Number</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().enrollmentNumber }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pr-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">CGPA</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().cgpa }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Internship Preferences -->
+                  <div class="card">
+                    <h2 class="text-black text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Internship Preferences</h2>
+                    <div class="p-4 grid grid-cols-2 gap-4">
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pr-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Internship Role</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().internshipRole }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pl-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Preferred Start Date</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().preferredStartDate | date:'mediumDate' }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pr-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Preferred End Date</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().preferredEndDate | date:'mediumDate' }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pl-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Mode of Internship</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().modeOfInternship }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pr-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Location Preference</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().locationPreference }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pl-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Availability</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().availability }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Skills & Experience -->
+                  <div class="card col-span-2">
+                    <h2 class="text-black text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Skills & Experience</h2>
+                    <div class="p-4 grid grid-cols-2 gap-4">
+                      <div class="col-span-2 flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Technical Skills</p>
+                        <p class="text-black text-sm font-normal leading-normal whitespace-pre-line">{{ userData().technicalSkills }}</p>
+                      </div>
+                      <div class="col-span-2 flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Soft Skills</p>
+                        <p class="text-black text-sm font-normal leading-normal whitespace-pre-line">{{ userData().softSkills }}</p>
+                      </div>
+                      <div class="col-span-2 flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Previous Experience</p>
+                        <p class="text-black text-sm font-normal leading-normal whitespace-pre-line">{{ userData().previousExperience }}</p>
+                      </div>
+                      <div class="col-span-2 flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Motivation Statement</p>
+                        <p class="text-black text-sm font-normal leading-normal whitespace-pre-line">{{ userData().motivationStatement }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pr-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Source of Application</p>
+                        <p class="text-black text-sm font-normal leading-normal">{{ userData().sourceOfApplication }}</p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pl-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Attendance Records</p>
+                        <p class="text-black text-sm font-normal leading-normal">
+                          {{ userData().attendances ? userData().attendances.length : '0' }} records
+                        </p>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pr-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Intern Tasks</p>
+                        <p class="text-black text-sm font-normal leading-normal">
+                          {{ userData().internTasks ? userData().internTasks.length : '0' }} tasks
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Online Profiles -->
+                  <div class="card">
+                    <h2 class="text-black text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Online Profiles</h2>
+                    <div class="p-4 grid grid-cols-2 gap-4">
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pr-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Resume</p>
+                        <a [href]="userData().resumeUrl" target="_blank" class="text-black text-sm font-normal leading-normal underline">View Resume</a>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pl-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Portfolio</p>
+                        <a [href]="userData().portfolioUrl" target="_blank" class="text-black text-sm font-normal leading-normal underline">{{ userData().portfolioUrl }}</a>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pr-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">LinkedIn</p>
+                        <a [href]="userData().linkedInUrl" target="_blank" class="text-black text-sm font-normal leading-normal underline">{{ userData().linkedInUrl }}</a>
+                      </div>
+                      <div class="flex flex-col gap-1 border-t border-solid border-t-gray-200 py-4 pl-2">
+                        <p class="text-gray-500 text-sm font-normal leading-normal">GitHub</p>
+                        <a [href]="userData().gitHubUrl" target="_blank" class="text-black text-sm font-normal leading-normal underline">{{ userData().gitHubUrl }}</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>

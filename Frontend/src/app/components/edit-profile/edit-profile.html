@@ -1,0 +1,48 @@
+<div class="relative flex size-full min-h-screen flex-col bg-[#fcfcf8] group/design-root overflow-x-hidden" style='font-family: "Spline Sans", "Noto Sans", sans-serif;'>
+  <div class="layout-container flex h-full grow flex-col">
+    <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f4f4e6] px-10 py-3">
+    </header>
+    <div class="px-40 flex flex-1 justify-center py-5">
+      <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+        <div class="flex flex-wrap justify-between gap-3 p-4">
+          <div class="flex min-w-72 flex-col gap-3">
+            <p class="text-[#1c1c0d] tracking-light text-[32px] font-bold leading-tight">Edit Intern Profile</p>
+            <p class="text-[#9e9d47] text-sm font-normal leading-normal">Update the intern's information</p>
+          </div>
+        </div>
+        <div class="flex p-4 @container">
+          <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" class="flex w-full flex-col gap-4">
+            <div class="flex gap-4 items-center">
+              <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32 cursor-pointer" [style.background-image]="'url(' + (selectedImagePreview || intern.profileImageUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuAhCKvdgaoxhipKxPlIp9tfM2NSnVZ1vFNDS0M_SJgo0FpVRyBdwH4z8wAE6kdW8-J6PTpk_uAQHVzoJAaIdLOIYa0VcVCVJ6FDyk0NtZJ4rdsM7cU5CKTRKFOdH2kkZk3i99kUGSMm-iNqwyz6TE1BUOBYOpAv9BDdob7gq0kYi5oidEyuUU04-TYMNompPZOWgWP5ibC4_Pn4au5ETbAGlY9b9423DSwYI0EK73Gyf7n8zUm-_Sw-OcNn7s7JtkhfTHiPKT7_lA') + ')'" (click)="showImagePopup()"></div>
+              <div class="flex flex-col gap-2">
+                <label for="profile-image-upload" class="text-[#1c1c0d] text-sm font-bold leading-normal tracking-[0.015em]">Profile Picture</label>
+                <input type="file" id="profile-image-upload" (change)="onFileSelected($event)" class="text-[#9e9d47] text-sm font-normal leading-normal">
+              </div>
+            </div>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div class="flex flex-col gap-1">
+                <label for="name" class="text-[#9e9d47] text-sm font-normal leading-normal">Name</label>
+                <input type="text" id="name" formControlName="name" class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                <div *ngIf="profileForm.get('name')?.invalid && profileForm.get('name')?.touched" class="text-red-500 text-xs mt-1">
+                  Name is required
+                </div>
+              </div>
+              <div class="flex flex-col gap-1">
+                <label for="email" class="text-[#9e9d47] text-sm font-normal leading-normal">Email Address</label>
+                <input type="email" id="email" formControlName="emailAddress" class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                <div *ngIf="profileForm.get('emailAddress')?.invalid && profileForm.get('emailAddress')?.touched" class="text-red-500 text-xs mt-1">
+                  <span *ngIf="profileForm.get('emailAddress')?.errors?.['required']">Email is required</span>
+                  <span *ngIf="profileForm.get('emailAddress')?.errors?.['email']">Please enter a valid email</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-end gap-4 mt-6">
+              <button type="button" (click)="cancel()" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#f4f4e6] text-[#1c1c0d] text-sm font-bold leading-normal tracking-[0.015em]">Cancel</button>
+              <button type="submit" [disabled]="profileForm.invalid" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#1c1c0d] text-white text-sm font-bold leading-normal tracking-[0.015em] disabled:bg-gray-400">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

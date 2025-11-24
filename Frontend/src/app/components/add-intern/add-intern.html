@@ -1,0 +1,46 @@
+<div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+  <div class="bg-white p-8 rounded-lg shadow-xl max-w-md w-full">
+    <h3 class="text-xl font-semibold mb-4">Invite New Intern</h3>
+    <p class="text-gray-600 mb-6">Enter the intern's email address to send them a registration link.</p>
+
+    <form (ngSubmit)="sendRegistrationLink()" #emailForm="ngForm">
+      <div class="mb-4">
+        <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Intern Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="internEmail"
+          required
+          email
+          #emailField="ngModel"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          [ngClass]="{'border-red-500': emailField.invalid && (emailField.dirty || emailField.touched)}"
+          placeholder="intern@example.com"
+        >
+        <p *ngIf="emailField.invalid && (emailField.dirty || emailField.touched)" class="text-red-500 text-xs italic mt-1">
+          <span *ngIf="emailField.errors?.['required']">Email is required.</span>
+          <span *ngIf="emailField.errors?.['email']">Please enter a valid email address.</span>
+        </p>
+      </div>
+
+      <div class="flex justify-end gap-3">
+        <button
+          type="button"
+          (click)="cancel()"
+          class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          [disabled]="emailForm.invalid"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          [ngClass]="{'opacity-50 cursor-not-allowed': emailForm.invalid}"
+        >
+          Send Invitation
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

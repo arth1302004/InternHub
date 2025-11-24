@@ -1,0 +1,246 @@
+/* You may need to import a font like Poppins from Google Fonts in your main index.html for this to work perfectly */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* New main container for the form, replacing the old split layout */
+.login-container-full-width {
+  display: flex;
+  justify-content: center; /* Center the form horizontally */
+  align-items: center; /* Center the form vertically */
+  min-height: 100vh; /* Take full viewport height */
+  font-family: 'Poppins', sans-serif;
+  background-color: #f7f8fa; /* Match the old form container background */
+  padding: 20px; /* Add some padding around the form */
+  box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+/* New form container, replacing the old 50% width */
+.login-form-container-full-width {
+  width: 100%;
+  max-width: 800px; /* Max width for the form content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Styles for the terms and conditions box */
+.terms-conditions-box {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #fdfdfd;
+  max-height: 200px; /* Make it scrollable if content is long */
+  overflow-y: auto;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.terms-conditions-box h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.terms-conditions-box ul {
+  list-style-type: disc;
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+.terms-conditions-box ul li {
+  margin-bottom: 5px;
+}
+
+.terms-conditions-box p {
+  margin-bottom: 10px;
+}
+
+
+.login-wrapper {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the whole wrapper content */
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 5px; /* Reduced margin */
+}
+
+.logo-container .logo-icon {
+    background-color: #1a202c;
+    color: white;
+    width: 32px; /* Smaller icon */
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-container h2 {
+  font-size: 1.4rem; /* Slightly smaller */
+  font-weight: 600;
+  margin: 0;
+}
+
+.tagline {
+  color: #718096;
+  font-size: 0.85rem; /* Slightly smaller */
+  margin-bottom: 25px; /* Space between tagline and card */
+}
+
+
+.login-form {
+  width: 100%;
+  padding: 30px; /* Slightly smaller padding */
+  background-color: #fff;
+  border-radius: 16px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.form-header {
+    margin-bottom: 20px;
+}
+
+.form-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.form-header p {
+    color: #718096;
+    font-size: 0.9rem;
+}
+
+
+.input-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f7f8fa;
+  font-size: 0.9rem;
+}
+
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+    color: #a0aec0;
+}
+
+.input-group .password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 40px; /* Adjust as needed */
+    cursor: pointer;
+    color: #718096;
+}
+
+/* Form Navigation Buttons */
+.form-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.prev-btn,
+.next-btn,
+.submit-btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prev-btn {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.next-btn,
+.submit-btn {
+  background-color: #1a202c;
+  color: #fff;
+}
+
+.prev-btn:hover {
+  background-color: #c0c0c0;
+}
+
+.next-btn:hover,
+.submit-btn:hover {
+  background-color: #2d3748;
+}
+
+.submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Checkbox styling */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: auto; /* Override 100% width */
+  margin-right: 10px;
+}
+
+.checkbox-group label {
+  margin-bottom: 0; /* Override default label margin */
+}
+
+
+.error-message {
+  text-align: center;
+  color: red;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}

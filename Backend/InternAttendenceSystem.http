@@ -1,0 +1,6 @@
+@InternAttendenceSystem_HostAddress = http://localhost:5101
+
+GET {{InternAttendenceSystem_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

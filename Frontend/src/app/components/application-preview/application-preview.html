@@ -1,0 +1,178 @@
+<div class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50" (click)="closePreview()">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 my-8 flex flex-col" (click)="$event.stopPropagation()">
+    <!-- Header -->
+    <div class="p-6 border-b border-gray-200">
+      <div class="flex justify-between items-center">
+        <div>
+          <h2 class="text-2xl font-semibold text-gray-800">{{ selectedApplication?.fullName }}</h2>
+          <p class="text-gray-600">{{ selectedApplication?.internshipRole }}</p>
+        </div>
+        <div class="flex items-center">
+          <a [href]="selectedApplication?.resumeUrl" target="_blank" download class="text-gray-500 hover:text-gray-700 focus:outline-none mr-4 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span class="ml-2">Resume</span>
+          </a>
+          <button (click)="closePreview()" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="p-6 overflow-y-auto" style="max-height: 50vh;">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Left Column -->
+        <div class="md:col-span-1">
+          <div class="mb-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">Contact Information</h3>
+            <div class="text-gray-600">
+              <p class="flex items-center mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                </svg>
+                {{ selectedApplication?.email }}
+              </p>
+              <p class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.518.76a11.05 11.05 0 006.292 6.292l.76-1.518a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                </svg>
+                {{ selectedApplication?.contactNumber }}
+              </p>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">Education</h3>
+            <div class="text-gray-600">
+              <p class="font-semibold">{{ selectedApplication?.universityName }}</p>
+              <p>{{ selectedApplication?.degree }}</p>
+              <p>Graduation: {{ selectedApplication?.preferredEndDate | date:'MM/dd/yyyy' }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="md:col-span-2">
+          <div class="mb-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">Skills</h3>
+            <div class="flex flex-wrap">
+              <span *ngFor="let skill of selectedApplication?.technicalSkills?.split(',')" class="bg-gray-200 text-gray-800 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded">{{ skill.trim() }}</span>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">Application Details</h3>
+            <div class="text-gray-600">
+              <p><span class="font-semibold">Submitted:</span> {{ selectedApplication?.requestDate | date:'M/d/yyyy, h:mm:ss a' }}</p>
+              <p><span class="font-semibold">Priority:</span> Normal</p> <!-- Assuming static -->
+              <p><span class="font-semibold">Source:</span> {{ selectedApplication?.sourceOfApplication }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="mt-8">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Application Timeline</h3>
+        <div *ngIf="timeline.length > 0">
+          <div *ngFor="let step of timeline; let i = index" class="flex items-start mb-6">
+            <div class="flex flex-col items-center mr-4">
+              <div [ngClass]="{
+                'bg-blue-500 text-white': step.isCurrent,
+                'bg-green-500 text-white': step.isCompleted && !step.isCurrent,
+                'bg-gray-300': !step.isCompleted && !step.isCurrent
+              }" class="rounded-full h-8 w-8 flex items-center justify-center">
+                <svg *ngIf="step.isCompleted" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div *ngIf="i < timeline.length - 1" class="h-16 border-l-2 border-gray-300"></div>
+            </div>
+            <div>
+              <p [ngClass]="step.isCurrent || step.isCompleted ? 'font-semibold text-gray-800' : 'font-semibold text-gray-500'">
+                {{ step.title }}
+                <span *ngIf="step.isCurrent" class="text-sm text-gray-500 font-normal ml-2">Current</span>
+              </p>
+              <p class="text-sm text-gray-500">{{ step.subtitle }}</p>
+              <div *ngIf="step.details" class="bg-gray-100 p-3 rounded-lg mt-2">
+                <p class="text-sm text-gray-700">{{ step.details }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="p-6 bg-gray-50 border-t border-gray-200">
+      <div class="flex justify-between items-center">
+        <div>
+          <p class="text-sm text-gray-600"><span class="font-semibold">Current Status:</span> {{ selectedApplication?.status }}</p>
+          <p class="text-sm text-gray-600"><span class="font-semibold">Timeline Duration:</span> {{ timelineDuration }} days</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-600"><span class="font-semibold">Next Steps:</span> {{ nextStep }}</p>
+        </div>
+      </div>
+
+      <!-- Admin Decision -->
+      <div *ngIf="userRole === 'admin' && selectedApplication?.status === 'Review'" class="mt-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Admin Decision</h3>
+        <p class="text-gray-500 text-sm mb-4">Make the final hiring decision for this candidate</p>
+        
+        <div class="flex items-center space-x-4">
+          <button (click)="setDecisionStep('approve')" 
+                  [class.bg-gray-800]="decisionStep === 'approve'" 
+                  [class.text-white]="decisionStep === 'approve'"
+                  [class.bg-white]="decisionStep !== 'approve'"
+                  [class.text-gray-700]="decisionStep !== 'approve'"
+                  class="flex-1 py-2 px-4 rounded-lg border border-gray-300 transition-colors duration-300">Approve & Hire</button>
+          <button (click)="setDecisionStep('reject')" 
+                  [class.bg-red-600]="decisionStep === 'reject'" 
+                  [class.text-white]="decisionStep === 'reject'"
+                  [class.bg-white]="decisionStep !== 'reject'"
+                  [class.text-gray-700]="decisionStep !== 'reject'"
+                  class="flex-1 py-2 px-4 rounded-lg border border-gray-300 transition-colors duration-300">Reject</button>
+        </div>
+
+        <div *ngIf="decisionStep === 'approve'">
+          <label for="approvalNotes" class="block text-sm font-medium text-gray-700">Approval Notes</label>
+          <textarea id="approvalNotes" [(ngModel)]="approvalNotes" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"></textarea>
+          
+          <div class="mt-4 p-4 bg-gray-100 rounded-lg">
+            <h4 class="font-semibold text-gray-800">Approval will:</h4>
+            <ul class="list-disc list-inside text-gray-600 text-sm mt-2">
+              <li>Automatically create intern account in the system</li>
+              <li>Grant intern access to the platform</li>
+              <li>Send welcome email to the candidate</li>
+              <li>Add to intern directory for task assignment</li>
+            </ul>
+          </div>
+
+          <button (click)="confirmApproval()" class="mt-4 w-full bg-gray-800 text-white py-2 px-4 rounded-lg">Confirm Approval</button>
+        </div>
+
+        <div *ngIf="decisionStep === 'reject'">
+          <label for="rejectionReason" class="block text-sm font-medium text-gray-700">Rejection Reason</label>
+          <textarea id="rejectionReason" [(ngModel)]="rejectionReason" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"></textarea>
+
+          <div class="mt-4 p-4 bg-red-50 rounded-lg">
+            <h4 class="font-semibold text-red-800">Rejection will:</h4>
+            <ul class="list-disc list-inside text-red-600 text-sm mt-2">
+              <li>Mark application as permanently rejected</li>
+              <li>Send rejection email to candidate</li>
+              <li>Remove from pending applications</li>
+              <li>Archive the application record</li>
+            </ul>
+          </div>
+
+          <button (click)="confirmRejection()" class="mt-4 w-full bg-red-600 text-white py-2 px-4 rounded-lg">Confirm Rejection</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

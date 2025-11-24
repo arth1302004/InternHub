@@ -1,0 +1,214 @@
+<div class="login-container-full-width">
+  <div class="login-form-container-full-width">
+    <div class="login-wrapper">
+        <div class="logo-container">
+            <div class="logo-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </div>
+            <h2>InternHub</h2>
+        </div>
+        <p class="tagline">Application Form</p>
+
+        <div class="login-form">
+          <div class="form-header">
+            <h3>&rarr; Step {{ currentStep }} of 6</h3>
+            <p>{{ getStepTitle() }}</p>
+          </div>
+
+          <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+
+            <!-- Step 1: Personal Information -->
+            <div *ngIf="currentStep === 1">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="input-group">
+                  <label for="fullName">Full Name</label>
+                  <input id="fullName" type="text" formControlName="fullName" placeholder="Enter your full name">
+                </div>
+                <div class="input-group">
+                  <label for="dateOfBirth">Date of Birth</label>
+                  <input id="dateOfBirth" type="date" formControlName="dateOfBirth">
+                </div>
+                <div class="input-group">
+                  <label for="gender">Gender</label>
+                  <select id="gender" formControlName="gender">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="input-group">
+                  <label for="contactNumber">Contact Number</label>
+                  <input id="contactNumber" type="text" formControlName="contactNumber" placeholder="Enter your contact number">
+                </div>
+                <div class="input-group">
+                  <label for="email">Email</label>
+                  <input id="email" type="email" formControlName="email" placeholder="Enter your email">
+                </div>
+                <div class="input-group col-span-2">
+                  <label for="address">Address</label>
+                  <textarea id="address" formControlName="address" placeholder="Enter your address"></textarea>
+                </div>
+                <div class="input-group">
+                  <label for="nationality">Nationality</label>
+                  <input id="nationality" type="text" formControlName="nationality" placeholder="Enter your nationality">
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Educational Information -->
+            <div *ngIf="currentStep === 2">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="input-group">
+                  <label for="educationLevel">Education Level</label>
+                  <input id="educationLevel" type="text" formControlName="educationLevel" placeholder="e.g., Bachelor's, Master's">
+                </div>
+                <div class="input-group">
+                  <label for="universityName">University Name</label>
+                  <input id="universityName" type="text" formControlName="universityName" placeholder="Enter your university name">
+                </div>
+                <div class="input-group">
+                  <label for="degree">Degree</label>
+                  <input id="degree" type="text" formControlName="degree" placeholder="e.g., B.Tech CSE">
+                </div>
+                <div class="input-group">
+                  <label for="yearOfStudy">Year of Study</label>
+                  <input id="yearOfStudy" type="text" formControlName="yearOfStudy" placeholder="e.g., 2nd Year, Final Year">
+                </div>
+                <div class="input-group">
+                  <label for="enrollmentNumber">Enrollment Number</label>
+                  <input id="enrollmentNumber" type="text" formControlName="enrollmentNumber" placeholder="Enter your enrollment number">
+                </div>
+                <div class="input-group">
+                  <label for="cgpa">CGPA (out of 4.0)</label>
+                  <input id="cgpa" type="number" formControlName="cgpa" placeholder="e.g., 3.5">
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Internship Details -->
+            <div *ngIf="currentStep === 3">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="input-group">
+                  <label for="internshipRole">Internship Role</label>
+                  <input id="internshipRole" type="text" formControlName="internshipRole" placeholder="e.g., Software Developer, Data Analyst">
+                </div>
+                <div class="input-group">
+                  <label for="preferredStartDate">Preferred Start Date</label>
+                  <input id="preferredStartDate" type="date" formControlName="preferredStartDate">
+                </div>
+                <div class="input-group">
+                  <label for="preferredEndDate">Preferred End Date</label>
+                  <input id="preferredEndDate" type="date" formControlName="preferredEndDate">
+                </div>
+                <div class="input-group">
+                  <label for="modeOfInternship">Mode of Internship</label>
+                  <select id="modeOfInternship" formControlName="modeOfInternship">
+                    <option value="">Select Mode</option>
+                    <option value="Remote">Remote</option>
+                    <option value="Onsite">Onsite</option>
+                    <option value="Hybrid">Hybrid</option>
+                  </select>
+                </div>
+                <div class="input-group">
+                  <label for="locationPreference">Location Preference</label>
+                  <input id="locationPreference" type="text" formControlName="locationPreference" placeholder="e.g., New York, Remote">
+                </div>
+                <div class="input-group">
+                  <label for="department">Department</label>
+                  <select id="department" formControlName="department">
+                    <option value="">Select Department</option>
+                    <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4: Skills and Experience -->
+            <div *ngIf="currentStep === 4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="input-group col-span-2">
+                  <label for="technicalSkills">Technical Skills (comma-separated)</label>
+                  <textarea id="technicalSkills" formControlName="technicalSkills" placeholder="e.g., Python, JavaScript, SQL"></textarea>
+                </div>
+                <div class="input-group col-span-2">
+                  <label for="softSkills">Soft Skills (comma-separated)</label>
+                  <textarea id="softSkills" formControlName="softSkills" placeholder="e.g., Communication, Teamwork, Problem-solving"></textarea>
+                </div>
+                <div class="input-group col-span-2">
+                  <label for="previousExperience">Previous Experience</label>
+                  <textarea id="previousExperience" formControlName="previousExperience" placeholder="Describe any previous internships or work experience"></textarea>
+                </div>
+                <div class="input-group">
+                  <label for="portfolioUrl">Portfolio URL</label>
+                  <input id="portfolioUrl" type="url" formControlName="portfolioUrl" placeholder="e.g., https://yourportfolio.com">
+                </div>
+                <div class="input-group">
+                  <label for="linkedInUrl">LinkedIn URL</label>
+                  <input id="linkedInUrl" type="url" formControlName="linkedInUrl" placeholder="e.g., https://linkedin.com/in/yourprofile">
+                </div>
+                <div class="input-group">
+                  <label for="gitHubUrl">GitHub URL</label>
+                  <input id="gitHubUrl" type="url" formControlName="gitHubUrl" placeholder="e.g., https://github.com/yourprofile">
+                </div>
+                <div class="input-group">
+                  <label for="resumeFile">Resume (PDF only)</label>
+                  <input id="resumeFile" type="file" (change)="onFileSelected($event, 'resume')" accept=".pdf">
+                </div>
+                <div class="input-group">
+                  <label for="profilePicFile">Profile Picture</label>
+                  <input id="profilePicFile" type="file" (change)="onFileSelected($event, 'profilePic')" accept="image/*">
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 5: Additional Information -->
+            <div *ngIf="currentStep === 5">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="input-group col-span-2">
+                  <label for="motivationStatement">Motivation Statement</label>
+                  <textarea id="motivationStatement" formControlName="motivationStatement" placeholder="Why are you interested in this internship?"></textarea>
+                </div>
+                <div class="input-group">
+                  <label for="sourceOfApplication">Source of Application</label>
+                  <input id="sourceOfApplication" type="text" formControlName="sourceOfApplication" placeholder="e.g., Referral, Website, University">
+                </div>
+                <div class="input-group">
+                  <label for="availability">Availability</label>
+                  <select id="availability" formControlName="availability">
+                    <option value="">Select Availability</option>
+                    <option value="Full-time">Full-time</option>
+                    <option value="Part-time">Part-time</option>
+                  </select>
+                </div>
+                <div class="input-group">
+                  <label for="emergencyContact">Emergency Contact</label>
+                  <input id="emergencyContact" type="text" formControlName="emergencyContact" placeholder="Name and contact number">
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 6: Agreement and Submit -->
+            <div *ngIf="currentStep === 6">
+              <div class="input-group checkbox-group">
+                <input type="checkbox" id="agreementAccepted" formControlName="agreementAccepted">
+                <label for="agreementAccepted">I agree to the terms and conditions</label>
+              </div>
+              <div *ngIf="applicationForm.get('agreementAccepted')?.invalid && applicationForm.get('agreementAccepted')?.touched" class="error-message">
+                You must accept the terms and conditions.
+              </div>
+            </div>
+
+            <div class="form-navigation">
+              <button type="button" class="prev-btn" (click)="prevStep()" *ngIf="currentStep > 1">Previous</button>
+              <button type="button" class="next-btn" (click)="nextStep()" *ngIf="currentStep < 6">Next</button>
+              <button type="submit" class="submit-btn" *ngIf="currentStep === 6" [disabled]="!applicationForm.valid || isSubmitting">
+                <span *ngIf="!isSubmitting">Submit Application</span>
+                <div *ngIf="isSubmitting" class="spinner"></div>
+              </button>
+            </div>
+          </form>
+        </div>
+    </div>
+  </div>
+</div>
