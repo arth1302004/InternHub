@@ -19,6 +19,20 @@ namespace InternAttendenceSystem.Data
         public DbSet<Admin> admins { get; set; }
         public DbSet<Task> tasks { get; set; }
         public DbSet<InternTask> InternTasks { get; set; }
+        public DbSet<Application> Applications { get; set; }    
+        public DbSet<ApplicationToken> ApplicationTokens { get; set; }    
+        public DbSet<SecurityQuestion> SecurityQuestions { get; set; }        
+        public DbSet<Evaluation> Evaluations { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<ProjectIntern> ProjectInterns { get; set; }
+        public DbSet<Document> Documents { get; set; }
+        public DbSet<Interview> Interviews { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Configure many-to-many relationship with InternTask join entity
             modelBuilder.Entity<InternTask>(entity =>
             {
                 entity.HasKey(it => new { it.internId, it.taskId });
