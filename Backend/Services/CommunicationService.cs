@@ -36,7 +36,7 @@ namespace InternAttendenceSystem.Services
             {
                 try
                 {
-                    await _emailService.SendEmailAsync(sendDto.RecipientEmail, sendDto.Subject, sendDto.Body);
+                    await _emailService.SendGenericEmailAsync(sendDto.RecipientEmail, sendDto.Subject, sendDto.Body);
                 }
                 catch
                 {

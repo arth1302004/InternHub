@@ -370,5 +370,47 @@ namespace InternAttendenceSystem.Services
                 return $"Failed to send rejection email: {ex.Message}";
             }
         }
+        public async Task<string?> SendGenericEmailAsync(string email, string subject, string body)
+        {
+            try
+            {
+                var emailSettings = _configuration.GetSection("EmailSettings");
+                var smtpServer = emailSettings["SmtpServer"];
+                var smtpPort = int.Parse(emailSettings["SmtpPort"]);
+                var smtpUsername = emailSettings["SmtpUsername"];
+                var smtpPassword = emailSettings["SmtpPassword"];
+                var fromAddress = emailSettings["FromAddress"];
+                var fromName = emailSettings["FromName"];
+
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress(fromName, fromAddress));
+                message.To.Add(new MailboxAddress("", email));
+                message.Subject = subject;
+
+                var bodyBuilder = new BodyBuilder
+                {
+                    HtmlBody = $@"
+                        <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
+                            {body}
+                            <br/>
+                            <p>Best regards,<br/>Intern Attendance System Team</p>
+                        </div>"
+                };
+
+                message.Body = bodyBuilder.ToMessageBody();
+
+                using var client = new SmtpClient();
+                await client.ConnectAsync(smtpServer, smtpPort, SecureSocketOptions.StartTls);
+                await client.AuthenticateAsync(smtpUsername, smtpPassword);
+                await client.SendAsync(message);
+                await client.DisconnectAsync(true);
+
+                return null; // Success
+            }
+            catch (Exception ex)
+            {
+                return $"Failed to send email: {ex.Message}";
+            }
+        }
     }
 }
