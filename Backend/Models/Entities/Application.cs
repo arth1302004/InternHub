@@ -51,5 +51,8 @@
 
         public string Status { get; set; } 
 
+        // 🔹 Interview Details
+        public DateTime? InterviewDate { get; set; }
+        public string InterviewLink { get; set; }
     }
 }

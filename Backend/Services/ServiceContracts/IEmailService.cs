@@ -11,5 +11,7 @@ namespace InternAttendenceSystem.Services.ServiceContracts
         Task<string?> SendPasswordResetEmailAsync(string email, string resetLink);
         Task<string?> SendNewInternCredentialsEmailAsync(string email, string password);
         Task<string?> SendApplicationFormLinkEmailAsync(string email, string applicationLink);
+        Task<string?> SendInterviewEmailAsync(string email, string interviewLink, DateTime interviewDate);
+        Task<string?> SendRejectionEmailAsync(string email, string fullName);
     }
 }

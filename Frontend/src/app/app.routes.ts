@@ -27,47 +27,50 @@ import { SecurityQuestionsComponent } from './components/security-questions/secu
 import { AnswerSecurityQuestionsComponent } from './components/answer-security-questions/answer-security-questions.component';
 import { AdminApprovalCenterComponent } from './components/admin-approval-center/admin-approval-center.component';
 import { EvaluationComponent } from './components/evaluation/evaluation';
+import { Analytics } from './components/analytics/analytics';
+import { DocumentsComponent } from './components/documents/documents.component';
 
 export const routes: Routes = [
 
   { path: '', redirectTo: 'login', pathMatch: 'full' }, // Changed this line
   { path: 'login', component: Login },
-  {path:'sign-up',component:Signup},
-  {path: 'verify-password/:id', component: VerifyPasswordComponent},
-  {path: 'reset-password/:id', component: ResetPasswordComponent},
-  {path: 'reset-password', component: ResetPasswordComponent},
+  { path: 'sign-up', component: Signup },
+  { path: 'verify-password/:id', component: VerifyPasswordComponent },
+  { path: 'reset-password/:id', component: ResetPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
 
-  {path: 'forgot-password', component: ForgotPasswordComponent},
-  {path: 'answer-security-questions', component: AnswerSecurityQuestionsComponent},
-  {path: 'application-form', component: ApplicationFormComponent},
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'answer-security-questions', component: AnswerSecurityQuestionsComponent },
+  { path: 'application-form', component: ApplicationFormComponent },
 
   {
     path: '',
-    component: Main,  
+    component: Main,
     canActivate: [authGuard],
     children: [
-   
+
       { path: 'interns', component: Interns, canActivate: [adminGuard] }, // Apply adminGuard
       { path: 'reports', component: Reports },
       { path: 'projects', component: Projects },
-      {path: 'view-profile/:id', component:Profile},
-       {path: 'intern-profile', component:Profile},
-      {path:'application',component:Application, canActivate: [adminGuard]},
-      {path:'task-management',component:TaskManagement, canActivate: [adminGuard]},
-      {path:'evaluation',component:EvaluationComponent, canActivate: [adminGuard]},
-      {path:'document',component:Document, canActivate: [adminGuard]},
-      {path:'forgot-password',component:ForgotPasswordComponent},
-      {path:'admin-dashboard',component:AdminDashboard, canActivate: [adminGuard]},
-      {path:'admin-profile',component:AdminProfile},
-      {path:'intern-dashboard',component:InternDashboard},
-      {path:'admin-approvals',component:AdminApprovalCenterComponent, canActivate: [adminGuard]},
-      {path: 'attendances', component:AttendanceList, canActivate: [adminGuard]},
-      {path:'edit-profile',component:EditProfile},
-       {path:'edit-profile/:id',component:EditProfile},
-      {path: 'add-intern', component: AddIntern, canActivate: [adminGuard]}, // New route for adding intern
-   
-      {path: 'settings', component: Settings, canActivate: [adminGuard]},
-      {path: 'security-questions', component: SecurityQuestionsComponent}
+      { path: 'view-profile/:id', component: Profile },
+      { path: 'intern-profile', component: Profile },
+      { path: 'application', component: Application, canActivate: [adminGuard] },
+      { path: 'task-management', component: TaskManagement, canActivate: [adminGuard] },
+      { path: 'evaluation', component: EvaluationComponent, canActivate: [adminGuard] },
+      { path: 'analytics', component: Analytics, canActivate: [adminGuard] },
+      { path: 'documents', component: DocumentsComponent, canActivate: [adminGuard] },
+      { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: 'admin-dashboard', component: AdminDashboard, canActivate: [adminGuard] },
+      { path: 'admin-profile', component: AdminProfile },
+      { path: 'intern-dashboard', component: InternDashboard },
+      { path: 'admin-approvals', component: AdminApprovalCenterComponent, canActivate: [adminGuard] },
+      { path: 'attendances', component: AttendanceList, canActivate: [adminGuard] },
+      { path: 'edit-profile', component: EditProfile },
+      { path: 'edit-profile/:id', component: EditProfile },
+      { path: 'add-intern', component: AddIntern, canActivate: [adminGuard] }, // New route for adding intern
+
+      { path: 'settings', component: Settings, canActivate: [adminGuard] },
+      { path: 'security-questions', component: SecurityQuestionsComponent }
     ]
   },
 

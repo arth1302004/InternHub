@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ApplicationService } from '../../service/application.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApplicationResponseDto } from '../../models/application';
@@ -38,7 +39,7 @@ interface RecentDecision {
 @Component({
   selector: 'app-admin-approval-center',
   standalone: true,
-  imports: [CommonModule, ApplicationPreview, RouterLink],
+  imports: [CommonModule, ApplicationPreview, RouterLink, FormsModule],
   templateUrl: './admin-approval-center.component.html',
   styleUrls: ['./admin-approval-center.component.css']
 })
@@ -74,8 +75,8 @@ export class AdminApprovalCenterComponent implements OnInit {
           const requestDate = new Date(a.requestDate);
           const today = new Date();
           return requestDate.getDate() === today.getDate() &&
-                 requestDate.getMonth() === today.getMonth() &&
-                 requestDate.getFullYear() === today.getFullYear();
+            requestDate.getMonth() === today.getMonth() &&
+            requestDate.getFullYear() === today.getFullYear();
         }).length;
 
         const totalDecisions = hiredApps.length + rejectedApps.length;
@@ -120,14 +121,14 @@ export class AdminApprovalCenterComponent implements OnInit {
 
   onAdminReview(applicationId: string): void {
     this.applicationService.getApplicationById(applicationId).subscribe({
-        next: (app: ApplicationResponseDto) => {
-            this.selectedApplication = app;
-            this.isModalOpen = true;
-            this.modalStateService.setModalState(true);
-        },
-        error: (err: HttpErrorResponse) => {
-            console.error('Error fetching application details:', err);
-        }
+      next: (app: ApplicationResponseDto) => {
+        this.selectedApplication = app;
+        this.isModalOpen = true;
+        this.modalStateService.setModalState(true);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error('Error fetching application details:', err);
+      }
     });
   }
 
@@ -139,6 +140,73 @@ export class AdminApprovalCenterComponent implements OnInit {
 
   onProfilePicError(item: PendingApproval | RecentDecision): void {
     item.showInitialsFallback = true;
+  }
+
+  showScheduleInterviewModal: boolean = false;
+  interviewDate: string = '';
+  interviewLink: string = '';
+  rejectionReason: string = ''; // Optional, if we want to track it
+
+  onScheduleInterview(applicationId: string): void {
+    this.selectedApplication = this.pendingApprovals.find(a => a.id === applicationId) as any; // Temporary cast or fetch
+    // Better to fetch full details if needed, but for ID it's fine.
+    // Actually, we need to set selectedApplication correctly.
+    // Let's reuse onAdminReview to set selectedApplication, then open interview modal.
+    this.applicationService.getApplicationById(applicationId).subscribe({
+      next: (app: ApplicationResponseDto) => {
+        this.selectedApplication = app;
+        this.showScheduleInterviewModal = true;
+        this.modalStateService.setModalState(true);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error('Error fetching application details:', err);
+      }
+    });
+  }
+
+  closeScheduleInterviewModal() {
+    this.showScheduleInterviewModal = false;
+    this.interviewDate = '';
+    this.interviewLink = '';
+    this.modalStateService.setModalState(false);
+    this.selectedApplication = null;
+  }
+
+  submitInterviewSchedule() {
+    if (!this.selectedApplication || !this.interviewDate || !this.interviewLink) return;
+
+    const updateDto = {
+      status: 'Interview',
+      interviewDate: new Date(this.interviewDate),
+      interviewLink: this.interviewLink
+    };
+
+    this.applicationService.updateApplicationStatus(this.selectedApplication.applicationId, updateDto).subscribe({
+      next: () => {
+        alert('Interview scheduled successfully!');
+        this.closeScheduleInterviewModal();
+        this.loadDashboardData();
+      },
+      error: (err) => {
+        console.error('Error scheduling interview:', err);
+        alert('Failed to schedule interview.');
+      }
+    });
+  }
+
+  onRejectApplication(applicationId: string): void {
+    if (confirm('Are you sure you want to reject this application? This action cannot be undone.')) {
+      this.applicationService.updateApplicationStatus(applicationId, { status: 'Rejected' }).subscribe({
+        next: () => {
+          alert('Application rejected.');
+          this.loadDashboardData();
+        },
+        error: (err) => {
+          console.error('Error rejecting application:', err);
+          alert('Failed to reject application.');
+        }
+      });
+    }
   }
 
   getInitials(fullName: string): string {

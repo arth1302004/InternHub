@@ -259,7 +259,27 @@ namespace InternAttendenceSystem.Services
 
             application.Status = statusDto.Status;
 
-            if (statusDto.Status.ToLower() == "hired")
+            if (statusDto.Status.ToLower() == "interview")
+            {
+                if (statusDto.InterviewDate.HasValue)
+                {
+                    application.InterviewDate = statusDto.InterviewDate.Value;
+                }
+                if (!string.IsNullOrEmpty(statusDto.InterviewLink))
+                {
+                    application.InterviewLink = statusDto.InterviewLink;
+                }
+
+                if (application.InterviewDate.HasValue && !string.IsNullOrEmpty(application.InterviewLink))
+                {
+                    await _emailService.SendInterviewEmailAsync(application.Email, application.InterviewLink, application.InterviewDate.Value);
+                }
+            }
+            else if (statusDto.Status.ToLower() == "rejected")
+            {
+                await _emailService.SendRejectionEmailAsync(application.Email, application.FullName);
+            }
+            else if (statusDto.Status.ToLower() == "hired")
             {
                 var internExists = await _context.intern.AnyAsync(i => i.emailAddress == application.Email);
                 if (internExists)
@@ -369,7 +389,9 @@ namespace InternAttendenceSystem.Services
                 Availability = application.Availability,
                 EmergencyContact = application.EmergencyContact,
                 AgreementAccepted = application.AgreementAccepted,
-                RequestDate = application.RequestDate
+                RequestDate = application.RequestDate,
+                InterviewDate = application.InterviewDate,
+                InterviewLink = application.InterviewLink
             };
         }
 

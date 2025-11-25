@@ -145,6 +145,9 @@ namespace InternAttendenceSystem.Models
         public string EmergencyContact { get; set; }
         public bool AgreementAccepted { get; set; }
         public DateTime RequestDate { get; set; }
+
+        public DateTime? InterviewDate { get; set; }
+        public string InterviewLink { get; set; }
     }
 
 }
