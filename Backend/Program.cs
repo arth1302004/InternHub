@@ -50,6 +50,7 @@ builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
 builder.Services.AddScoped<IInterviewService, InterviewService>();
 builder.Services.AddScoped<ICommunicationService, CommunicationService>();
+builder.Services.AddScoped<ICsvExportService, CsvExportService>();
 builder.Services.AddSingleton<IEncryptionService>(provider => 
     new EncryptionService(provider.GetRequiredService<IWebHostEnvironment>()));
 

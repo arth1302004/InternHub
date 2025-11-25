@@ -44,5 +44,29 @@ namespace InternAttendenceSystem.Services
 
         }
 
+        public async Task<Admin> UpdateAdmin(Guid adminId, UpdateAdminDto updateDto)
+        {
+            var admin = await _context.admins.FindAsync(adminId);
+            if (admin == null)
+            {
+                throw new ArgumentException("Admin not found");
+            }
+
+            if (!string.IsNullOrEmpty(updateDto.username))
+                admin.username = updateDto.username;
+            
+            if (!string.IsNullOrEmpty(updateDto.email))
+                admin.Email = updateDto.email;
+            
+            if (!string.IsNullOrEmpty(updateDto.fullName))
+                admin.FullName = updateDto.fullName;
+            
+            if (!string.IsNullOrEmpty(updateDto.ImageUrl))
+                admin.ProfileImageUrl = updateDto.ImageUrl;
+
+            await _context.SaveChangesAsync();
+            return admin;
+        }
+
     }
 }

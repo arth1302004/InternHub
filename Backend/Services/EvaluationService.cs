@@ -54,5 +54,17 @@ namespace InternAttendenceSystem.Services
                 InternInitials = e.InternInitials
             }).ToListAsync();
         }
+
+        public async Task<IEnumerable<EvaluationExportDto>> GetAllEvaluationsForExport()
+        {
+            return await _context.Evaluations.Select(e => new EvaluationExportDto
+            {
+                InternName = e.InternName,
+                EvaluatorName = e.Evaluator,
+                Score = (int)e.OverallRating,
+                Comments = "",
+                EvaluationDate = e.Date
+            }).ToListAsync();
+        }
     }
 }

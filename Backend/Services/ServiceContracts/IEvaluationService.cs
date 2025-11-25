@@ -8,5 +8,6 @@ namespace InternAttendenceSystem.Services.ServiceContracts
     {
         Task<EvaluationStatsDto> GetEvaluationStats();
         Task<IEnumerable<EvaluationDto>> GetEvaluations(string status);
+        Task<IEnumerable<EvaluationExportDto>> GetAllEvaluationsForExport();
     }
 }

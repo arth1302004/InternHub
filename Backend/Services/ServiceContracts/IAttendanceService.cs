@@ -18,6 +18,7 @@ namespace InternAttendenceSystem.Services.ServiceContracts
         public Task<Attendance> UpdateAttendance(Guid internid,Guid Id,AttendanceDto attendance);
 
         public Task<Attendance?> DeleteAttendance(Guid Id, Guid internId);
+        public Task<IEnumerable<AttendanceExportDto>> GetAttendanceForExport(DateTime? startDate, DateTime? endDate);
 
     }
 }

@@ -4,6 +4,7 @@ import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './interceptors/auth.interceptor-interceptor';
+import { errorInterceptor } from './interceptors/error.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { FeatherModule } from 'angular-feather';
 import { Camera, Heart, Github } from 'angular-feather/icons';
@@ -24,7 +25,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     importProvidersFrom(FeatherModule.pick(icons)),
     provideAnimations(),
-     provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes), provideClientHydration(withEventReplay())

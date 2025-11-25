@@ -306,5 +306,10 @@ namespace InternAttendenceSystem.Services
             return _context.SecurityQuestions.Select(q => q.QuestionText).ToList();
         }
 
+        public async Task<IEnumerable<Intern>> GetAllInternsForExport()
+        {
+            return await _context.intern.ToListAsync();
+        }
+
     }
 }

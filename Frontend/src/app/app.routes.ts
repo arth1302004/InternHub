@@ -30,6 +30,7 @@ import { EvaluationComponent } from './components/evaluation/evaluation';
 import { Analytics } from './components/analytics/analytics';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { InterviewManagementComponent } from './components/interview-management/interview-management.component';
+import { CommunicationComponent } from './components/communication/communication.component';
 
 export const routes: Routes = [
 
@@ -61,6 +62,7 @@ export const routes: Routes = [
       { path: 'analytics', component: Analytics, canActivate: [adminGuard] },
       { path: 'interviews', component: InterviewManagementComponent, canActivate: [adminGuard] },
       { path: 'documents', component: DocumentsComponent, canActivate: [adminGuard] },
+      { path: 'communication', component: CommunicationComponent, canActivate: [adminGuard] },
       { path: 'forgot-password', component: ForgotPasswordComponent },
       { path: 'admin-dashboard', component: AdminDashboard, canActivate: [adminGuard] },
       { path: 'admin-profile', component: AdminProfile },

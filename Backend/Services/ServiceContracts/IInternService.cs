@@ -30,5 +30,7 @@ namespace InternAttendenceSystem.Services.ServiceContracts
         public void RemoveApplicationTokens(IEnumerable<ApplicationToken> tokens);
 
         public Task<ApplicationToken> GetApplicationToken(string token);
-        public List<string> GetAllSecurityQuestions();    }
+        public List<string> GetAllSecurityQuestions();
+        public Task<IEnumerable<Intern>> GetAllInternsForExport();
+    }
 }

@@ -108,5 +108,28 @@ namespace InternAttendenceSystem.Services
                 throw new InvalidOperationException("Failed to delete attendance record.", ex);
             }
         }
+
+        public async Task<IEnumerable<AttendanceExportDto>> GetAttendanceForExport(DateTime? startDate, DateTime? endDate)
+        {
+            var query = _context.attendances.AsQueryable();
+
+            if (startDate.HasValue)
+                query = query.Where(a => a.Date >= startDate.Value);
+
+            if (endDate.HasValue)
+                query = query.Where(a => a.Date <= endDate.Value);
+
+            var attendances = await query.ToListAsync();
+
+            return attendances.Select(a => new AttendanceExportDto
+            {
+                Date = a.Date,
+                InternName = a.InternId.ToString(),
+                Status = a.status ?? "",
+                CheckInTime = null,
+                CheckOutTime = null,
+                HoursWorked = null
+            });
+        }
     }
 }

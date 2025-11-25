@@ -1,0 +1,161 @@
+<div class="communication-container">
+    <div class="header">
+        <h1>Communication Center</h1>
+        <p>Manage emails, templates, and view message history.</p>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs">
+        <button [class.active]="activeTab === 'compose'" (click)="setActiveTab('compose')">
+            <i class="fas fa-pen"></i> Compose
+        </button>
+        <button [class.active]="activeTab === 'history'" (click)="setActiveTab('history')">
+            <i class="fas fa-history"></i> History
+        </button>
+        <button [class.active]="activeTab === 'templates'" (click)="setActiveTab('templates')">
+            <i class="fas fa-file-alt"></i> Templates
+        </button>
+    </div>
+
+    <!-- Notifications -->
+    <div *ngIf="error" class="alert error">
+        {{ error }}
+    </div>
+    <div *ngIf="successMessage" class="alert success">
+        {{ successMessage }}
+    </div>
+
+    <!-- Compose View -->
+    <div *ngIf="activeTab === 'compose'" class="tab-content fade-in">
+        <div class="card">
+            <h2>Send New Message</h2>
+
+            <div class="form-group">
+                <label>Load Template (Optional)</label>
+                <select [(ngModel)]="selectedTemplateId" (change)="onTemplateSelect()">
+                    <option [ngValue]="null">-- Select a Template --</option>
+                    <option *ngFor="let t of templates" [value]="t.templateId">{{ t.name }}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Recipient Email</label>
+                <input type="email" [(ngModel)]="newMessage.recipientEmail" placeholder="intern@example.com">
+            </div>
+
+            <div class="form-group">
+                <label>Subject</label>
+                <input type="text" [(ngModel)]="newMessage.subject" placeholder="Message Subject">
+            </div>
+
+            <div class="form-group">
+                <label>Message Body</label>
+                <textarea [(ngModel)]="newMessage.body" rows="10" placeholder="Type your message here..."></textarea>
+            </div>
+
+            <div class="actions">
+                <button class="btn-primary" (click)="sendMessage()" [disabled]="isLoading">
+                    <span *ngIf="!isLoading">Send Message</span>
+                    <span *ngIf="isLoading">Sending...</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- History View -->
+    <div *ngIf="activeTab === 'history'" class="tab-content fade-in">
+        <div class="card">
+            <h2>Message History</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Recipient</th>
+                            <th>Subject</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let msg of messages">
+                            <td>{{ msg.sentAt | date:'medium' }}</td>
+                            <td>{{ msg.recipientEmail }}</td>
+                            <td>{{ msg.subject }}</td>
+                            <td>{{ msg.type }}</td>
+                            <td>
+                                <span class="status-badge" [class.sent]="msg.status === 'Sent'"
+                                    [class.failed]="msg.status === 'Failed'">
+                                    {{ msg.status }}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr *ngIf="messages.length === 0">
+                            <td colspan="5" class="text-center">No messages found.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Templates View -->
+    <div *ngIf="activeTab === 'templates'" class="tab-content fade-in">
+
+        <!-- List Mode -->
+        <div *ngIf="!isEditingTemplate" class="card">
+            <div class="flex-between">
+                <h2>Message Templates</h2>
+                <button class="btn-primary" (click)="startNewTemplate()">+ New Template</button>
+            </div>
+
+            <div class="grid-list">
+                <div *ngFor="let t of templates" class="template-item">
+                    <div class="template-info">
+                        <h3>{{ t.name }}</h3>
+                        <p><strong>Subject:</strong> {{ t.subject }}</p>
+                        <small>Last Modified: {{ t.lastModified | date:'short' }}</small>
+                    </div>
+                    <div class="template-actions">
+                        <button class="btn-icon" (click)="editTemplate(t)" title="Edit"><i
+                                class="fas fa-edit"></i></button>
+                        <button class="btn-icon delete" (click)="deleteTemplate(t.templateId)" title="Delete"><i
+                                class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+                <div *ngIf="templates.length === 0" class="text-center p-4">
+                    No templates created yet.
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit/Create Mode -->
+        <div *ngIf="isEditingTemplate" class="card fade-in">
+            <h2>{{ editingTemplateId ? 'Edit Template' : 'Create New Template' }}</h2>
+
+            <div class="form-group">
+                <label>Template Name</label>
+                <input type="text" [(ngModel)]="currentTemplate.name" placeholder="e.g., Welcome Email">
+            </div>
+
+            <div class="form-group">
+                <label>Subject Line</label>
+                <input type="text" [(ngModel)]="currentTemplate.subject" placeholder="Email Subject">
+            </div>
+
+            <div class="form-group">
+                <label>Body Content</label>
+                <textarea [(ngModel)]="currentTemplate.body" rows="10" placeholder="Template content..."></textarea>
+                <small>You can use placeholders like {{ '{' }}Name{{ '}' }} if supported by backend logic.</small>
+            </div>
+
+            <div class="actions">
+                <button class="btn-secondary" (click)="cancelEditTemplate()">Cancel</button>
+                <button class="btn-primary" (click)="saveTemplate()" [disabled]="isLoading">
+                    {{ editingTemplateId ? 'Update Template' : 'Create Template' }}
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
