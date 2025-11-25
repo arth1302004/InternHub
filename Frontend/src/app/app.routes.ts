@@ -29,6 +29,7 @@ import { AdminApprovalCenterComponent } from './components/admin-approval-center
 import { EvaluationComponent } from './components/evaluation/evaluation';
 import { Analytics } from './components/analytics/analytics';
 import { DocumentsComponent } from './components/documents/documents.component';
+import { InterviewManagementComponent } from './components/interview-management/interview-management.component';
 
 export const routes: Routes = [
 
@@ -58,6 +59,7 @@ export const routes: Routes = [
       { path: 'task-management', component: TaskManagement, canActivate: [adminGuard] },
       { path: 'evaluation', component: EvaluationComponent, canActivate: [adminGuard] },
       { path: 'analytics', component: Analytics, canActivate: [adminGuard] },
+      { path: 'interviews', component: InterviewManagementComponent, canActivate: [adminGuard] },
       { path: 'documents', component: DocumentsComponent, canActivate: [adminGuard] },
       { path: 'forgot-password', component: ForgotPasswordComponent },
       { path: 'admin-dashboard', component: AdminDashboard, canActivate: [adminGuard] },

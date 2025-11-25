@@ -24,34 +24,6 @@ namespace InternAttendenceSystem.Data
         public DbSet<SecurityQuestion> SecurityQuestions { get; set; }        
         public DbSet<Evaluation> Evaluations { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<ProjectIntern> ProjectInterns { get; set; }
-        public DbSet<Document> Documents { get; set; }
-        public DbSet<Interview> Interviews { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            // Configure many-to-many relationship with InternTask join entity
-            modelBuilder.Entity<InternTask>(entity =>
-            {
-                entity.HasKey(it => new { it.internId, it.taskId });
-
-                entity.HasOne(it => it.Intern)
-                      .WithMany(i => i.InternTasks)
-                      .HasForeignKey(it => it.internId)
-                      .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasOne(it => it.Task)
-                      .WithMany(t => t.InternTasks)
-                      .HasForeignKey(it => it.taskId)
-                      .OnDelete(DeleteBehavior.Cascade);
-            });
-
-            // Configure many-to-many relationship with ProjectIntern join entity
-            modelBuilder.Entity<ProjectIntern>(entity =>
-            {
-                entity.HasKey(pi => pi.Id);
 
                 entity.HasOne(pi => pi.Project)
                       .WithMany(p => p.ProjectInterns)
