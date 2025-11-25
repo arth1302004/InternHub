@@ -48,6 +48,7 @@ builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
+builder.Services.AddScoped<IInterviewService, InterviewService>();
 builder.Services.AddSingleton<IEncryptionService>(provider => 
     new EncryptionService(provider.GetRequiredService<IWebHostEnvironment>()));
 
