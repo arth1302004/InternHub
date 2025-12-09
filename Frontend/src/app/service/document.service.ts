@@ -38,7 +38,7 @@ export interface DocumentStatsDto {
 })
 export class DocumentService {
     private http = inject(HttpClient);
-    private baseUrl = 'https://localhost:7140';
+    private baseUrl = 'http://localhost:5101';
 
     uploadDocument(file: File, category: string, description?: string, isPublic: boolean = false): Observable<DocumentDto> {
         const formData = new FormData();

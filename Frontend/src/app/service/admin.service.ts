@@ -9,7 +9,7 @@ import { IAdmin } from '../models/admin';
 export class AdminService {
   http = inject(HttpClient)
 
-  private baseUrl = 'https://localhost:7140';
+  private baseUrl = 'http://localhost:5101';
 
   GetAdminById(adminId: string): Observable<any> {
     return this.http.get<IAdmin>(`${this.baseUrl}/api/Admin/${adminId}`)

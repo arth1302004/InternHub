@@ -8,7 +8,7 @@ import { ApplicationResponseDto, CreateApplicationDto, UpdateApplicationDto, Upd
 })
 export class ApplicationService {
   private http = inject(HttpClient);
-  private baseUrl = 'https://localhost:7140/api/Applications'; // Adjust base URL as needed
+  private baseUrl = 'http://localhost:5101/api/Applications'; // Adjust base URL as needed
 
   getAllApplications(): Observable<ApplicationResponseDto[]> {
     return this.http.get<ApplicationResponseDto[]>(this.baseUrl);

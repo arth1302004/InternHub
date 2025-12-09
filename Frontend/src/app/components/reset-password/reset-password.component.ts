@@ -27,7 +27,7 @@ export class ResetPasswordComponent implements OnInit {
   route = inject(ActivatedRoute);
   http = inject(HttpClient); // Inject HttpClient
   publickey: string = '';
-  private baseUrl = 'https://localhost:7140'; // Adjust if your backend URL is different
+  private baseUrl = 'http://localhost:5101'; // Adjust if your backend URL is different
 
   ngOnInit(): void {
     this.resetPasswordForm = this.fb.group({
@@ -75,9 +75,9 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   checkPasswordStrength(password: string) {
-    const weakRegex = /.{6,}/; 
-    const mediumRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/; 
-    const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{12,}$/; 
+    const weakRegex = /.{6,}/;
+    const mediumRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{12,}$/;
 
     if (strongRegex.test(password)) {
       this.passwordStrength = 'strong';
@@ -94,7 +94,7 @@ export class ResetPasswordComponent implements OnInit {
     if (this.resetPasswordForm.invalid) {
       Swal.fire({
         icon: 'error',
-        title: 'Oops...', 
+        title: 'Oops...',
         text: 'Please fill all the required fields and ensure passwords match!',
       });
       return;
@@ -118,7 +118,7 @@ export class ResetPasswordComponent implements OnInit {
     if (newPassword !== confirmPassword) {
       Swal.fire({
         icon: 'error',
-        title: 'Oops...', 
+        title: 'Oops...',
         text: 'New password and confirm password do not match!',
       });
       return;
@@ -134,7 +134,7 @@ export class ResetPasswordComponent implements OnInit {
       console.error('Encryption failed: encryptedNewPassword or encryptedConfirmPassword is null or empty.');
       Swal.fire({
         icon: 'error',
-        title: 'Oops...', 
+        title: 'Oops...',
         text: 'Failed to encrypt passwords.',
       });
       return;
@@ -163,7 +163,7 @@ export class ResetPasswordComponent implements OnInit {
           }
           Swal.fire({
             icon: 'error',
-            title: 'Oops...', 
+            title: 'Oops...',
             text: errorMessage,
           });
         },
@@ -177,7 +177,7 @@ export class ResetPasswordComponent implements OnInit {
               title: 'Password Reset!',
               text: 'Your password has been successfully reset.',
             }).then(() => {
-              this.router.navigate(['/profile']); 
+              this.router.navigate(['/profile']);
             });
           } else {
             Swal.fire({
@@ -195,7 +195,7 @@ export class ResetPasswordComponent implements OnInit {
           }
           Swal.fire({
             icon: 'error',
-            title: 'Oops...', 
+            title: 'Oops...',
             text: errorMessage,
           });
         },
@@ -203,7 +203,7 @@ export class ResetPasswordComponent implements OnInit {
     }
   }
 
-  RedirectToLogin(){
+  RedirectToLogin() {
     this.router.navigate(['/login'])
   }
 

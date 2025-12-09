@@ -67,7 +67,7 @@ export class AdminDashboard implements OnInit {
 
   private http = inject(HttpClient);
   private router = inject(Router); // Inject Router
-  private baseUrl = 'https://localhost:7140'; // Adjust if your backend URL is different
+  private baseUrl = 'http://localhost:5101'; // Adjust if your backend URL is different
 
   ngOnInit(): void {
     this.fetchDashboardData();
@@ -111,7 +111,7 @@ export class AdminDashboard implements OnInit {
       error: (err) => {
         console.error('Error fetching recent activities:', err);
       }
-      });
+    });
 
     // Fetch Upcoming Deadlines
     this.http.get<UpcomingDeadline[]>(`${this.baseUrl}/api/dashboard/upcoming-deadlines`).subscribe({

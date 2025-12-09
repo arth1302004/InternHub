@@ -12,22 +12,22 @@ import { JSEncrypt } from 'jsencrypt';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule,CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
 
-export class Login  implements OnInit{
+export class Login implements OnInit {
 
-  UserLoginForm!:FormGroup;
+  UserLoginForm!: FormGroup;
   fb = inject(FormBuilder);
   router = inject(Router)
-  loginCreds!:Login;
-  token!:string;
-  role!:string;
-  username!:string;
-  userId!:string;
-  IsInCorrectForm:boolean = false
+  loginCreds!: Login;
+  token!: string;
+  role!: string;
+  username!: string;
+  userId!: string;
+  IsInCorrectForm: boolean = false
   isLoading: boolean = false;
   isLoginDisabled: boolean = false;
   disabledUntil: Date | null = null;
@@ -38,15 +38,15 @@ export class Login  implements OnInit{
   sharedService = inject(SharedService)
   http = inject(HttpClient); // Inject HttpClient
   publickey: string = '';
-  private baseUrl = 'https://localhost:7140'; // Adjust if your backend URL is different
+  private baseUrl = 'http://localhost:5101'; // Adjust if your backend URL is different
 
   ngOnInit(): void {
     if (typeof localStorage !== 'undefined') {
       localStorage.clear();
     }
     this.UserLoginForm = this.fb.group({
-      username:['',Validators.required],
-      password:['',Validators.required]
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     })
     this.getPublicKey(); // Fetch public key on init
   }
@@ -67,16 +67,16 @@ export class Login  implements OnInit{
       }
     });
   }
-  RedirectoSignup(){
+  RedirectoSignup() {
     this.router.navigate(['/sign-up'])
   }
-  RedirectToForgotPassword(){
+  RedirectToForgotPassword() {
     this.router.navigate(['/forgot-password'])
 
   }
-  onSubmit(){
+  onSubmit() {
     console.log('onSubmit called');
-    if(this.UserLoginForm.valid){
+    if (this.UserLoginForm.valid) {
       console.log('Form is valid');
       if (!this.publickey) {
         Swal.fire({
@@ -104,88 +104,89 @@ export class Login  implements OnInit{
       }
       console.log('Encrypted password:', encryptedPassword);
 
-      const  data = { ...this.UserLoginForm.value, password: encryptedPassword }; // Create a new object with encrypted password
+      const data = { ...this.UserLoginForm.value, password: encryptedPassword }; // Create a new object with encrypted password
       console.log(data);
       this.isLoading = true;
-     this.authService.UserLogin(data).pipe(
+      this.authService.UserLogin(data).pipe(
         finalize(() => {
           console.log('Finalize called');
           this.isLoading = false
         })
       ).subscribe(
-       {next:(response:any)=>{
-        console.log('Next handler called');
-        console.log('Login successful response:', response); // Added console.log
-        this.token = response.token;
-        this.role = response.role;
-        this.username  = response.username;
-        this.userId = response.userId;
-        this.sharedService.notifyPasswordResetStatus(response.isPasswordReset);
+        {
+          next: (response: any) => {
+            console.log('Next handler called');
+            console.log('Login successful response:', response); // Added console.log
+            this.token = response.token;
+            this.role = response.role;
+            this.username = response.username;
+            this.userId = response.userId;
+            this.sharedService.notifyPasswordResetStatus(response.isPasswordReset);
 
-        console.log(this.role)
-        console.log(this.token)
-        localStorage.setItem('token',this.token);
-        localStorage.setItem('role',this.role)
-        localStorage.setItem('username',this.username)
-        localStorage.setItem('userId',this.userId)
-        
-         console.log(this.token)
-         this.sharedService.notifyLoginSuccess();
+            console.log(this.role)
+            console.log(this.token)
+            localStorage.setItem('token', this.token);
+            localStorage.setItem('role', this.role)
+            localStorage.setItem('username', this.username)
+            localStorage.setItem('userId', this.userId)
 
-         // Always show success message first
-         Swal.fire({
-          icon: 'success',
-          title: 'Login Successful!',
-          text: 'You have successfully logged in.',
-          showConfirmButton: false, // Hide default confirm button
-          timer: 1500 // Auto close after 1.5 seconds
-         }).then(() => {
-            // After the initial success message, check for password reset
-            if (!response.isPasswordReset) {
-              Swal.fire({
-                icon: 'warning',
-                title: 'Password Reset Required!',
-                text: 'You are yet to reset your password.',
-                showCancelButton: true,
-                confirmButtonText: 'Reset Now',
-                cancelButtonText: 'Cancel',
-                allowOutsideClick: false, // Prevent closing by clicking outside
-                allowEscapeKey: false // Prevent closing by escape key
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  this.router.navigate(['/verify-password', this.userId]);
-                } else {
-                  // User clicked cancel, proceed with normal navigation
-                  this.navigateToDashboard(this.role);
-                }
-              });
-            } else {
-              // Password already reset, proceed with normal navigation
-              this.navigateToDashboard(this.role);
-            }
-         });
-      },
-      error:(error:any)=>{
-        console.log('Error handler called');
-        console.error('Login error response:', error); // Added console.error
+            console.log(this.token)
+            this.sharedService.notifyLoginSuccess();
 
-        // Removed the specific 400 error handling as it's no longer expected for password reset
-        // if (error.status === 400 && error.error && error.error.message === 'Password reset required') {
-        //   console.log('Password reset required for user:', error.error.userId);
-        // }
+            // Always show success message first
+            Swal.fire({
+              icon: 'success',
+              title: 'Login Successful!',
+              text: 'You have successfully logged in.',
+              showConfirmButton: false, // Hide default confirm button
+              timer: 1500 // Auto close after 1.5 seconds
+            }).then(() => {
+              // After the initial success message, check for password reset
+              if (!response.isPasswordReset) {
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'Password Reset Required!',
+                  text: 'You are yet to reset your password.',
+                  showCancelButton: true,
+                  confirmButtonText: 'Reset Now',
+                  cancelButtonText: 'Cancel',
+                  allowOutsideClick: false, // Prevent closing by clicking outside
+                  allowEscapeKey: false // Prevent closing by escape key
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    this.router.navigate(['/verify-password', this.userId]);
+                  } else {
+                    // User clicked cancel, proceed with normal navigation
+                    this.navigateToDashboard(this.role);
+                  }
+                });
+              } else {
+                // Password already reset, proceed with normal navigation
+                this.navigateToDashboard(this.role);
+              }
+            });
+          },
+          error: (error: any) => {
+            console.log('Error handler called');
+            console.error('Login error response:', error); // Added console.error
 
-        this.IsInCorrectForm = true;
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Invalid username or password!',
-        });
-      }
+            // Removed the specific 400 error handling as it's no longer expected for password reset
+            // if (error.status === 400 && error.error && error.error.message === 'Password reset required') {
+            //   console.log('Password reset required for user:', error.error.userId);
+            // }
+
+            this.IsInCorrectForm = true;
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Invalid username or password!',
+            });
+          }
+        }
+      );
+
     }
-     );
-     
-    }
-    else{
+    else {
       this.IsInCorrectForm = true
       Swal.fire({
         icon: 'error',

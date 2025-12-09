@@ -13,7 +13,7 @@ export class AuthService {
 
   http = inject(HttpClient);
 
-  private baseUrl = 'https://localhost:7140';
+  private baseUrl = 'http://localhost:5101';
 
   UserLogin(userCreds: IUser): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/api/Login/login`, userCreds).pipe(
@@ -32,7 +32,7 @@ export class AuthService {
 
     // Admins might have a different validation endpoint, or we can use a generic one.
     // For this case, we assume validation can be done by fetching the user's own data.
-    const validationUrl = userRole === 'admin' 
+    const validationUrl = userRole === 'admin'
       ? `${this.baseUrl}/api/intern` // A generic protected endpoint for admin
       : `${this.baseUrl}/api/intern/${userId}`; // Fetch intern's own data
 

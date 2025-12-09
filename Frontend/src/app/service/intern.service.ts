@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, OnInit,inject } from '@angular/core';
+import { Injectable, OnInit, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IIntern } from '../models/intern';
 import { PagedList } from '../models/paged-list';
@@ -9,9 +9,9 @@ import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
 @Injectable({
   providedIn: 'root'
 })
-export class InternService  {
-  private http = inject(HttpClient);  
-  private baseUrl = 'https://localhost:7140';
+export class InternService {
+  private http = inject(HttpClient);
+  private baseUrl = 'http://localhost:5101';
 
   sendOtp(email: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/intern/send-otp`, { email });
@@ -47,22 +47,22 @@ export class InternService  {
     console.log("this method was executed with pagination and search");
     return this.http.get<PagedList<IIntern>>(`${this.baseUrl}/api/intern`, { params: params });
   }
-  GetInternById(id:string):Observable<any>{
+  GetInternById(id: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/api/intern/${id}`);
   }
 
-  UpdateIntern(id:string,dataToUpdate:any):Observable<any>{
-    return this.http.put<any>(`${this.baseUrl}/api/intern/${id}`,dataToUpdate)
+  UpdateIntern(id: string, dataToUpdate: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/api/intern/${id}`, dataToUpdate)
   }
-  AddIntern(intern:any):Observable<any>{
-    return this.http.post<any>(`${this.baseUrl}/api/intern/AddIntern`,intern);
+  AddIntern(intern: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/api/intern/AddIntern`, intern);
   }
-  DeleteIntern(internId:string):Observable<any>{
+  DeleteIntern(internId: string): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}/api/intern/${internId}`);
   }
-  MarkAttendance(internId:string,status:any):Observable<any>{
+  MarkAttendance(internId: string, status: any): Observable<any> {
     console.log(internId)
-    return this.http.post<any>(`${this.baseUrl}/api/attendance/${internId}`,status)
+    return this.http.post<any>(`${this.baseUrl}/api/attendance/${internId}`, status)
   }
 
   verifyPassword(id: string, password: string): Observable<any> {
@@ -100,5 +100,5 @@ export class InternService  {
   getUserIdFromResetToken(token: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/api/Login/get-user-id-from-token?token=${token}`);
   }
-  
+
 }

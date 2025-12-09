@@ -45,7 +45,7 @@ export interface ApplicationTrend {
   providedIn: 'root'
 })
 export class AnalyticsService {
-  private apiUrl = 'https://localhost:7059/api/Analytics';
+  private apiUrl = 'http://localhost:5101';
 
   constructor(private http: HttpClient) { }
 

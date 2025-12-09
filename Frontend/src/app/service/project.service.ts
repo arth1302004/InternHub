@@ -70,7 +70,7 @@ export interface ProjectStatsInterface {
     providedIn: 'root'
 })
 export class ProjectService {
-    private apiUrl = 'https://localhost:7059/api/Projects';
+    private apiUrl = 'http://localhost:5101/api/Projects';
 
     constructor(private http: HttpClient) { }
 

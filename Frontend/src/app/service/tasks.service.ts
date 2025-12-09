@@ -8,7 +8,7 @@ import { InternInfo } from '../models/intern-info.model';
   providedIn: 'root'
 })
 export class TasksService {
-  private apiUrl = 'https://localhost:7140/api/Tasks';
+  private apiUrl = 'http://localhost:5101/api/Tasks';
 
   constructor(private http: HttpClient) { }
 

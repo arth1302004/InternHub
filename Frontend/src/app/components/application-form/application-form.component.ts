@@ -21,10 +21,10 @@ export class ApplicationFormComponent implements OnInit {
   private router = inject(Router); // Inject Router
 
   currentStep: number = 1;
-        isSubmitting: boolean = false;
-      resumeFile: File | null = null;
-      profilePicFile: File | null = null;
-      departments: string[] = ['HR', 'Engineering', 'Marketing', 'Finance', 'Operations', 'Sales', 'Research and Development'];
+  isSubmitting: boolean = false;
+  resumeFile: File | null = null;
+  profilePicFile: File | null = null;
+  departments: string[] = ['HR', 'Engineering', 'Marketing', 'Finance', 'Operations', 'Sales', 'Research and Development'];
 
   stepTitles: string[] = [
     'Personal Information',
@@ -62,7 +62,7 @@ export class ApplicationFormComponent implements OnInit {
       preferredEndDate: ['', Validators.required],
       modeOfInternship: ['', Validators.required],
       locationPreference: ['', Validators.required],
-      department:['',Validators.required],
+      department: ['', Validators.required],
 
       // Skills and Experience
       technicalSkills: [''],
@@ -184,7 +184,7 @@ export class ApplicationFormComponent implements OnInit {
         formData.append('ProfilePicFile', this.profilePicFile, this.profilePicFile.name);
       }
 
-      this.http.post('https://localhost:7140/api/Applications', formData).subscribe({
+      this.http.post('http://localhost:5101/api/Applications', formData).subscribe({
         next: (response: any) => {
           this.isSubmitting = false;
           Swal.fire({

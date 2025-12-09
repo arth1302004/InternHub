@@ -7,7 +7,7 @@ import { DashboardStats } from '../models/dashboard';
   providedIn: 'root'
 })
 export class DashboardService {
-  private baseUrl = 'https://localhost:7000/api/dashboard'; // Adjust if your backend URL is different
+  private baseUrl = 'http://localhost:5101/api/dashboard'; // Adjust if your backend URL is different
 
   constructor(private http: HttpClient) { }
 

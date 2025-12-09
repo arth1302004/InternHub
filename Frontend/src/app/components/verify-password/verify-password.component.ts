@@ -17,7 +17,7 @@ import { InternService } from '../../service/intern.service'; // Import InternSe
 export class VerifyPasswordComponent implements OnInit {
   verifyPasswordForm!: FormGroup;
   publickey: string = '';
-  private baseUrl = 'https://localhost:7140'; // Adjust if your backend URL is different
+  private baseUrl = 'http://localhost:5101'; // Adjust if your backend URL is different
   internId: string | null = null; // To store internId from route
 
   fb = inject(FormBuilder);
