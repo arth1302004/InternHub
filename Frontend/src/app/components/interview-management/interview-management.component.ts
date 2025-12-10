@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -7,7 +8,8 @@ import { InterviewService, Interview, CreateInterviewDto, UpdateInterviewDto } f
     selector: 'app-interview-management',
     standalone: true,
     imports: [CommonModule, FormsModule],
-    templateUrl: './interview-management.component.html'
+    templateUrl: './interview-management.component.html',
+    styleUrls: ['./interview-management.component.css']
 })
 export class InterviewManagementComponent implements OnInit {
     interviews: Interview[] = [];

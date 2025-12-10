@@ -1,10 +1,11 @@
 /* General Styles */
 .task-management-container {
-  padding: 20px 10px;
+  padding: 20px;
   background-color: #ffffff;
   font-family: 'Arial', sans-serif;
-  max-width: 1500px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 header {
@@ -20,15 +21,15 @@ header {
 }
 
 header h1 {
-  font-size: 24px;
-  font-weight: 600;
-  color: #333;
+  font-size: 30px;
+  font-weight: 700;
+  color: #1f2937;
   margin-bottom: 5px;
 }
 
 header p {
   font-size: 14px;
-  color: #666;
+  color: #6b7280;
 }
 
 .create-task-btn {
@@ -36,7 +37,7 @@ header p {
   color: #fff;
   border: none;
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 15px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
@@ -45,174 +46,227 @@ header p {
 /* Filters */
 .filters {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.search-container {
+  flex: 1;
 }
 
 .filters input,
 .filters select {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f8f9fa;
-  color: #333;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  background-color: #f9fafb;
+  color: #374151;
   font-size: 14px;
-  flex: 1;
+  outline: none;
+  transition: all 0.3s ease;
+  border: 1px solid #d1d5db;
+}
+
+.filters input:focus,
+.filters select:focus {
+  background-color: #f9fafb;
+  border-color: #d1d5db;
+  box-shadow: 0 0 0 2px #d1d5db;
 }
 
 .filters select {
-  flex: 0 0 auto;
+  width: auto;
+  min-width: 150px;
+  cursor: pointer;
 }
 
 /* Status Summary */
 .status-summary {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
 }
 
 .summary-card {
   background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 10px 15px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
   text-align: center;
-  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .number {
   font-size: 24px;
-  font-weight: bold;
-  color: #333;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.number.to-do {
+  color: #8b5cf6;
+}
+
+.number.in-progress {
+  color: #f59e0b;
 }
 
 .number.completed {
-  color: #28a745;
+  color: #10b981;
 }
 
 .number.overdue {
-  color: #dc3545;
+  color: #ef4444;
 }
 
 .label {
-  font-size: 14px;
-  color: #333;
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
 }
 
-/* Task Grid */
+/* Task List */
 .task-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .task-card {
   background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 15px;
-  box-shadow: none;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
 }
 
 .task-card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .task-card-header h3 {
   font-size: 16px;
-  color: #333;
+  font-weight: 600;
+  color: #111827;
   margin: 0;
 }
 
 .description {
   font-size: 14px;
-  color: #666;
-  margin-bottom: 10px;
+  color: #6b7280;
+  margin-bottom: 16px;
+  line-height: 1.5;
 }
 
-.task-meta {
+.task-meta-row {
   display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
-.status, .priority {
-  padding: 4px 12px;
-  border-radius: 20px;
+.status,
+.priority {
+  padding: 4px 10px;
+  border-radius: 6px;
   font-size: 12px;
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
 }
 
 .status.to-do {
-  background-color: #e2e3e5;
-  color: #41464b;
+  background-color: #f3f4f6;
+  color: #374151;
 }
 
 .status.in-progress {
-  background-color: #d1ecf1;
-  color: #0c5460;
+  background-color: #eff6ff;
+  color: #3b82f6;
 }
 
 .status.completed {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: #ecfdf5;
+  color: #10b981;
 }
 
 .status.overdue {
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: #fef2f2;
+  color: #ef4444;
 }
 
 .priority.high {
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: #fef2f2;
+  color: #ef4444;
 }
 
 .priority.medium {
-  background-color: #fff3cd;
-  color: #856404;
+  background-color: #fffbeb;
+  color: #f59e0b;
 }
 
 .priority.low {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: #ecfdf5;
+  color: #10b981;
 }
 
-.assignees {
-  font-size: 13px;
-  color: #666;
-  margin-bottom: 10px;
-}
-
+.assignees,
 .due-date {
   font-size: 13px;
-  color: #666;
-  margin-bottom: 10px;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+}
+
+.progress-section {
+  margin-bottom: 16px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #374151;
+  margin-bottom: 6px;
+  font-weight: 500;
 }
 
 .progress {
-  background-color: #e0e0e0;
-  border-radius: 4px;
+  background-color: #f3f4f6;
+  border-radius: 9999px;
   height: 6px;
-  margin-bottom: 10px;
+  overflow: hidden;
+  margin-bottom: 0;
 }
 
 .progress-bar {
-  background-color: #212529;
+  background-color: #000;
   height: 100%;
-  border-radius: 4px;
+  border-radius: 9999px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .tags span {
-  background-color: #e9ecef;
-  padding: 4px 8px;
-  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  padding: 4px 10px;
+  border-radius: 6px;
   font-size: 12px;
-  margin-right: 5px;
-  color: #333;
+  color: #374151;
+  font-weight: 500;
 }
 
 /* Dropdown */
@@ -240,15 +294,18 @@ header p {
   right: 0;
   background-color: #fff;
   min-width: 120px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   border-radius: 5px;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transform-origin: top right;
+  transform: translateY(-10px) scale(0.95);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dropdown:hover .dropdown-content {
   opacity: 1;
   visibility: visible;
+  transform: translateY(0) scale(1);
 }
 
 .dropdown-content a {
@@ -274,7 +331,7 @@ header p {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -298,7 +355,16 @@ header p {
 
 .modal-header h2 {
   font-size: 18px;
-  color: #333;
+  font-weight: 600;
+  color: #111;
+  margin: 0;
+}
+
+.modal-description {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0 0 0;
+  line-height: 1.4;
 }
 
 .close-btn {
@@ -320,12 +386,36 @@ header p {
 .modal-body select,
 .modal-body textarea {
   width: 100%;
-  padding: 8px;
+  padding: 10px 14px;
   margin-bottom: 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f8f9fa;
+  border: none;
+  border-radius: 8px;
+  background-color: #f3f4f6;
   font-size: 14px;
+  color: #333;
+  outline: none;
+}
+
+.modal-body input:focus,
+.modal-body select:focus,
+.modal-body textarea:focus {
+  box-shadow: 0 0 0 2px #e5e7eb;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-row .form-group {
+  margin-bottom: 0;
+}
+
+.form-row input,
+.form-row select {
+  margin-bottom: 0;
 }
 
 .modal-body textarea {
@@ -340,20 +430,30 @@ header p {
 
 .cancel-btn {
   background-color: #fff;
-  border: 1px solid #ddd;
-  color: #333;
+  border: 1px solid #e5e7eb;
+  color: #374151;
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  font-weight: 500;
+}
+
+.cancel-btn:hover {
+  background-color: #f9fafb;
 }
 
 .create-btn {
-  background-color: #000;
+  background-color: #111827;
   border: none;
   color: #fff;
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  font-weight: 500;
+}
+
+.create-btn:hover {
+  background-color: #000;
 }
 
 /* View Task Modal Specific */

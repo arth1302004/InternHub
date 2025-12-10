@@ -1,72 +1,69 @@
-<div class="p-6 bg-gray-50 min-h-screen">
-    <div class="flex justify-between items-center mb-6">
+<div class="page-container">
+    <div class="header-section">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">Interview Management</h1>
-            <p class="text-gray-500">Schedule and manage candidate interviews</p>
+            <h1 class="page-title">Interview Management</h1>
+            <p class="page-subtitle">Schedule and manage candidate interviews</p>
         </div>
-        <button (click)="openScheduleModal()"
-            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2">
+        <button (click)="openScheduleModal()" class="primary-button">
             <span>+</span> Schedule Interview
         </button>
     </div>
 
     <!-- Stats Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-            <div class="flex items-center gap-3">
-                <div class="p-2 bg-blue-50 rounded-lg">
-                    <span class="text-blue-600 text-xl">📅</span>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-content">
+                <div class="icon-wrapper blue">
+                    <span class="stat-icon">📅</span>
                 </div>
                 <div>
-                    <p class="text-sm text-gray-500">Scheduled</p>
-                    <p class="text-xl font-bold">{{ upcomingInterviews.length }}</p>
+                    <p class="stat-label">Scheduled</p>
+                    <p class="stat-value">{{ upcomingInterviews.length }}</p>
                 </div>
             </div>
         </div>
-        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-            <div class="flex items-center gap-3">
-                <div class="p-2 bg-green-50 rounded-lg">
-                    <span class="text-green-600 text-xl">✅</span>
+        <div class="stat-card">
+            <div class="stat-content">
+                <div class="icon-wrapper green">
+                    <span class="stat-icon">✅</span>
                 </div>
                 <div>
-                    <p class="text-sm text-gray-500">Completed</p>
-                    <p class="text-xl font-bold">{{ completedInterviews.length }}</p>
+                    <p class="stat-label">Completed</p>
+                    <p class="stat-value">{{ completedInterviews.length }}</p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Upcoming Interviews -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 mb-6">
-        <div class="p-4 border-b border-gray-100">
-            <h2 class="font-semibold text-lg">Upcoming Interviews</h2>
+    <div class="interviews-section">
+        <div class="section-header">
+            <h2 class="section-title">Upcoming Interviews</h2>
         </div>
-        <div class="p-4">
-            <div *ngIf="upcomingInterviews.length === 0" class="text-center py-8 text-gray-500">
+        <div class="section-body">
+            <div *ngIf="upcomingInterviews.length === 0" class="empty-state">
                 No upcoming interviews scheduled.
             </div>
-            <div class="space-y-4">
-                <div *ngFor="let interview of upcomingInterviews"
-                    class="flex items-center justify-between p-4 border border-gray-100 rounded-lg hover:bg-gray-50 transition-colors">
-                    <div class="flex items-center gap-4">
-                        <div
-                            class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold">
+            <div class="interviews-list">
+                <div *ngFor="let interview of upcomingInterviews" class="interview-card">
+                    <div class="card-main-info">
+                        <div class="avatar-circle avatar-blue">
                             {{ interview.candidateName.charAt(0) }}
                         </div>
                         <div>
-                            <h3 class="font-medium text-gray-900">{{ interview.candidateName }}</h3>
-                            <p class="text-sm text-gray-500">{{ interview.position }}</p>
-                            <div class="flex items-center gap-4 mt-1 text-sm text-gray-500">
-                                <span class="flex items-center gap-1">📅 {{ interview.date | date }}</span>
-                                <span class="flex items-center gap-1">⏰ {{ interview.time }}</span>
-                                <span class="flex items-center gap-1">📍 {{ interview.type }}</span>
+                            <h3 class="candidate-name">{{ interview.candidateName }}</h3>
+                            <p class="candidate-position">{{ interview.position }}</p>
+                            <div class="meta-info">
+                                <span class="meta-item">📅 {{ interview.date | date }}</span>
+                                <span class="meta-item">⏰ {{ interview.time }}</span>
+                                <span class="meta-item">📍 {{ interview.type }}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">{{
+                    <div class="card-actions">
+                        <span class="status-badge status-scheduled">{{
                             interview.status }}</span>
-                        <button (click)="openDetailsModal(interview)" class="p-2 text-gray-400 hover:text-blue-600">
+                        <button (click)="openDetailsModal(interview)" class="secondary-button">
                             Details
                         </button>
                     </div>
@@ -76,39 +73,37 @@
     </div>
 
     <!-- Completed Interviews -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100">
-        <div class="p-4 border-b border-gray-100">
-            <h2 class="font-semibold text-lg">Past Interviews</h2>
+    <div class="interviews-section">
+        <div class="section-header">
+            <h2 class="section-title">Past Interviews</h2>
         </div>
-        <div class="p-4">
-            <div *ngIf="completedInterviews.length === 0" class="text-center py-8 text-gray-500">
+        <div class="section-body">
+            <div *ngIf="completedInterviews.length === 0" class="empty-state">
                 No past interviews found.
             </div>
-            <div class="space-y-4">
-                <div *ngFor="let interview of completedInterviews"
-                    class="flex items-center justify-between p-4 border border-gray-100 rounded-lg hover:bg-gray-50 transition-colors">
-                    <div class="flex items-center gap-4">
-                        <div
-                            class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 font-bold">
+            <div class="interviews-list">
+                <div *ngFor="let interview of completedInterviews" class="interview-card">
+                    <div class="card-main-info">
+                        <div class="avatar-circle avatar-gray">
                             {{ interview.candidateName.charAt(0) }}
                         </div>
                         <div>
-                            <h3 class="font-medium text-gray-900">{{ interview.candidateName }}</h3>
-                            <p class="text-sm text-gray-500">{{ interview.position }}</p>
-                            <div class="flex items-center gap-4 mt-1 text-sm text-gray-500">
-                                <span class="flex items-center gap-1">📅 {{ interview.date | date }}</span>
-                                <span class="flex items-center gap-1">⭐ {{ interview.rating ? interview.rating + '/5' :
+                            <h3 class="candidate-name">{{ interview.candidateName }}</h3>
+                            <p class="candidate-position">{{ interview.position }}</p>
+                            <div class="meta-info">
+                                <span class="meta-item">📅 {{ interview.date | date }}</span>
+                                <span class="meta-item">⭐ {{ interview.rating ? interview.rating + '/5' :
                                     'No Rating' }}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2">
+                    <div class="card-actions">
                         <span [ngClass]="{
-              'bg-green-100 text-green-700': interview.status === 'Completed',
-              'bg-red-100 text-red-700': interview.status === 'Cancelled',
-              'bg-orange-100 text-orange-700': interview.status === 'NoShow'
-            }" class="px-3 py-1 rounded-full text-sm font-medium">{{ interview.status }}</span>
-                        <button (click)="openDetailsModal(interview)" class="p-2 text-gray-400 hover:text-blue-600">
+              'status-completed': interview.status === 'Completed',
+              'status-cancelled': interview.status === 'Cancelled',
+              'status-noshow': interview.status === 'NoShow'
+            }" class="status-badge">{{ interview.status }}</span>
+                        <button (click)="openDetailsModal(interview)" class="secondary-button">
                             Details
                         </button>
                     </div>
@@ -118,169 +113,149 @@
     </div>
 
     <!-- Schedule Modal -->
-    <div *ngIf="showScheduleModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div class="p-6 border-b border-gray-100 flex justify-between items-center">
-                <h2 class="text-xl font-bold">Schedule Interview</h2>
-                <button (click)="closeScheduleModal()" class="text-gray-400 hover:text-gray-600">✕</button>
+    <div *ngIf="showScheduleModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="modal-title">Schedule Interview</h2>
+                <button (click)="closeScheduleModal()" class="close-button">✕</button>
             </div>
-            <div class="p-6 space-y-4">
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Application ID (GUID)</label>
-                        <input [(ngModel)]="newInterview.applicationId"
-                            class="w-full p-2 border border-gray-300 rounded-lg" placeholder="Enter Application ID">
+            <div class="modal-body">
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Application ID (GUID)</label>
+                        <input [(ngModel)]="newInterview.applicationId" class="form-input"
+                            placeholder="Enter Application ID">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Position</label>
-                        <input [(ngModel)]="newInterview.position" class="w-full p-2 border border-gray-300 rounded-lg"
-                            placeholder="Software Engineer">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Candidate Name</label>
-                        <input [(ngModel)]="newInterview.candidateName"
-                            class="w-full p-2 border border-gray-300 rounded-lg">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Candidate Email</label>
-                        <input [(ngModel)]="newInterview.candidateEmail"
-                            class="w-full p-2 border border-gray-300 rounded-lg">
+                    <div class="form-group">
+                        <label class="form-label">Position</label>
+                        <input [(ngModel)]="newInterview.position" class="form-input" placeholder="Software Engineer">
                     </div>
                 </div>
-                <div class="grid grid-cols-3 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
-                        <input type="date" [(ngModel)]="newInterview.date"
-                            class="w-full p-2 border border-gray-300 rounded-lg">
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Candidate Name</label>
+                        <input [(ngModel)]="newInterview.candidateName" class="form-input">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Time</label>
-                        <input type="time" [(ngModel)]="newInterview.time"
-                            class="w-full p-2 border border-gray-300 rounded-lg">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Duration (min)</label>
-                        <input type="number" [(ngModel)]="newInterview.duration"
-                            class="w-full p-2 border border-gray-300 rounded-lg">
+                    <div class="form-group">
+                        <label class="form-label">Candidate Email</label>
+                        <input [(ngModel)]="newInterview.candidateEmail" class="form-input">
                     </div>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
-                    <select [(ngModel)]="newInterview.type" class="w-full p-2 border border-gray-300 rounded-lg">
+                <div class="form-grid-3">
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" [(ngModel)]="newInterview.date" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time</label>
+                        <input type="time" [(ngModel)]="newInterview.time" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Duration (min)</label>
+                        <input type="number" [(ngModel)]="newInterview.duration" class="form-input">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Type</label>
+                    <select [(ngModel)]="newInterview.type" class="form-select">
                         <option value="Video">Video Call</option>
                         <option value="Phone">Phone Call</option>
                         <option value="InPerson">In Person</option>
                     </select>
                 </div>
-                <div *ngIf="newInterview.type === 'Video'">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Meeting Link</label>
-                    <input [(ngModel)]="newInterview.meetingLink" class="w-full p-2 border border-gray-300 rounded-lg"
+                <div *ngIf="newInterview.type === 'Video'" class="form-group">
+                    <label class="form-label">Meeting Link</label>
+                    <input [(ngModel)]="newInterview.meetingLink" class="form-input"
                         placeholder="https://meet.google.com/...">
                 </div>
-                <div *ngIf="newInterview.type === 'InPerson'">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
-                    <input [(ngModel)]="newInterview.location" class="w-full p-2 border border-gray-300 rounded-lg"
-                        placeholder="Conference Room A">
+                <div *ngIf="newInterview.type === 'InPerson'" class="form-group">
+                    <label class="form-label">Location</label>
+                    <input [(ngModel)]="newInterview.location" class="form-input" placeholder="Conference Room A">
                 </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Interviewer Name</label>
-                        <input [(ngModel)]="newInterview.interviewerName"
-                            class="w-full p-2 border border-gray-300 rounded-lg">
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Interviewer Name</label>
+                        <input [(ngModel)]="newInterview.interviewerName" class="form-input">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Interviewer Email</label>
-                        <input [(ngModel)]="newInterview.interviewerEmail"
-                            class="w-full p-2 border border-gray-300 rounded-lg">
+                    <div class="form-group">
+                        <label class="form-label">Interviewer Email</label>
+                        <input [(ngModel)]="newInterview.interviewerEmail" class="form-input">
                     </div>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Notes</label>
-                    <textarea [(ngModel)]="newInterview.notes" class="w-full p-2 border border-gray-300 rounded-lg"
-                        rows="3"></textarea>
+                <div class="form-group">
+                    <label class="form-label">Notes</label>
+                    <textarea [(ngModel)]="newInterview.notes" class="form-textarea" rows="3"></textarea>
                 </div>
             </div>
-            <div class="p-6 border-t border-gray-100 flex justify-end gap-3">
-                <button (click)="closeScheduleModal()"
-                    class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">Cancel</button>
-                <button (click)="scheduleInterview()"
-                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Schedule</button>
+            <div class="modal-footer">
+                <button (click)="closeScheduleModal()" class="secondary-button">Cancel</button>
+                <button (click)="scheduleInterview()" class="primary-button">Schedule</button>
             </div>
         </div>
     </div>
 
     <!-- Details Modal -->
-    <div *ngIf="showDetailsModal && selectedInterview"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div class="p-6 border-b border-gray-100 flex justify-between items-center">
-                <h2 class="text-xl font-bold">Interview Details</h2>
-                <button (click)="closeDetailsModal()" class="text-gray-400 hover:text-gray-600">✕</button>
+    <div *ngIf="showDetailsModal && selectedInterview" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="modal-title">Interview Details</h2>
+                <button (click)="closeDetailsModal()" class="close-button">✕</button>
             </div>
-            <div class="p-6 space-y-6">
+            <div class="modal-body">
                 <!-- Info Section -->
-                <div class="bg-gray-50 p-4 rounded-lg space-y-3">
-                    <div class="flex justify-between">
+                <div class="details-info-box">
+                    <div class="details-header">
                         <div>
                             <h3 class="font-bold text-lg">{{ selectedInterview.candidateName }}</h3>
-                            <p class="text-gray-500">{{ selectedInterview.position }}</p>
+                            <p class="text-muted">{{ selectedInterview.position }}</p>
                         </div>
-                        <div class="text-right">
-                            <p class="text-sm font-medium">{{ selectedInterview.date | date }}</p>
-                            <p class="text-sm text-gray-500">{{ selectedInterview.time }} ({{ selectedInterview.duration
+                        <div class="details-meta">
+                            <p class="font-medium">{{ selectedInterview.date | date }}</p>
+                            <p class="text-muted">{{ selectedInterview.time }} ({{ selectedInterview.duration
                                 }} min)</p>
                         </div>
                     </div>
-                    <div class="flex gap-4 text-sm">
-                        <span class="text-gray-600">📧 {{ selectedInterview.candidateEmail }}</span>
-                        <span class="text-gray-600">👤 Interviewer: {{ selectedInterview.interviewerName }}</span>
+                    <div class="details-row">
+                        <span class="text-muted">📧 {{ selectedInterview.candidateEmail }}</span>
+                        <span class="text-muted">👤 Interviewer: {{ selectedInterview.interviewerName }}</span>
                     </div>
                     <div *ngIf="selectedInterview.meetingLink" class="text-sm">
-                        <a [href]="selectedInterview.meetingLink" target="_blank"
-                            class="text-blue-600 hover:underline">Join Meeting</a>
+                        <a [href]="selectedInterview.meetingLink" target="_blank" class="details-link">Join Meeting</a>
                     </div>
                 </div>
 
                 <!-- Actions -->
-                <div class="flex gap-2">
+                <div class="card-actions">
                     <button *ngIf="selectedInterview.status === 'Scheduled'"
-                        (click)="updateInterviewStatus('Completed')"
-                        class="px-3 py-1 bg-green-100 text-green-700 rounded-lg hover:bg-green-200">Mark
+                        (click)="updateInterviewStatus('Completed')" class="status-badge status-completed">Mark
                         Completed</button>
                     <button *ngIf="selectedInterview.status === 'Scheduled'"
                         (click)="updateInterviewStatus('Cancelled')"
-                        class="px-3 py-1 bg-red-100 text-red-700 rounded-lg hover:bg-red-200">Cancel</button>
+                        class="status-badge status-cancelled">Cancel</button>
                     <button *ngIf="selectedInterview.status === 'Scheduled'" (click)="updateInterviewStatus('NoShow')"
-                        class="px-3 py-1 bg-orange-100 text-orange-700 rounded-lg hover:bg-orange-200">No Show</button>
+                        class="status-badge status-noshow">No Show</button>
                 </div>
 
                 <!-- Feedback Section -->
-                <div class="space-y-4">
-                    <h3 class="font-semibold text-lg border-b pb-2">Feedback & Rating</h3>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
-                        <div class="flex gap-1">
-                            <button *ngFor="let star of [1,2,3,4,5]" (click)="setRating(star)"
-                                class="text-2xl focus:outline-none"
-                                [class.text-yellow-400]="star <= feedbackData.rating"
-                                [class.text-gray-300]="star > feedbackData.rating">★</button>
+                <div class="interviews-list">
+                    <h3 class="section-title border-b pb-2">Feedback & Rating</h3>
+                    <div class="form-group">
+                        <label class="form-label">Rating</label>
+                        <div class="rating-stars">
+                            <button *ngFor="let star of [1,2,3,4,5]" (click)="setRating(star)" class="star-btn"
+                                [class.active]="star <= feedbackData.rating">★</button>
                         </div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Feedback Notes</label>
-                        <textarea [(ngModel)]="feedbackData.feedback"
-                            class="w-full p-2 border border-gray-300 rounded-lg" rows="4"
+                    <div class="form-group">
+                        <label class="form-label">Feedback Notes</label>
+                        <textarea [(ngModel)]="feedbackData.feedback" class="form-textarea" rows="4"
                             placeholder="Enter detailed feedback..."></textarea>
                     </div>
                 </div>
             </div>
-            <div class="p-6 border-t border-gray-100 flex justify-end gap-3">
-                <button (click)="closeDetailsModal()"
-                    class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">Close</button>
-                <button (click)="saveFeedback()"
-                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Save Feedback</button>
+            <div class="modal-footer">
+                <button (click)="closeDetailsModal()" class="secondary-button">Close</button>
+                <button (click)="saveFeedback()" class="primary-button">Save Feedback</button>
             </div>
         </div>
     </div>
