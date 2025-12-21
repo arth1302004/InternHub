@@ -100,8 +100,7 @@ namespace InternAttendenceSystem.Data
                           new ValueComparer<List<string>>(
                               (c1, c2) => c1.SequenceEqual(c2),
                               c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-                              c => c.ToList()))
-                      .HasColumnType("nvarchar(max)");
+                              c => c.ToList()));
             });
 
             // Configure Project entity
@@ -121,8 +120,7 @@ namespace InternAttendenceSystem.Data
                           new ValueComparer<List<string>>(
                               (c1, c2) => c1.SequenceEqual(c2),
                               c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-                              c => c.ToList()))
-                      .HasColumnType("nvarchar(max)");
+                              c => c.ToList()));
             });
 
             // Configure Document entity
@@ -142,8 +140,7 @@ namespace InternAttendenceSystem.Data
                           new ValueComparer<List<string>>(
                               (c1, c2) => c1 != null && c2 != null && c1.SequenceEqual(c2),
                               c => c != null ? c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())) : 0,
-                              c => c != null ? c.ToList() : new List<string>()))
-                      .HasColumnType("nvarchar(max)");
+                              c => c != null ? c.ToList() : new List<string>()));
 
                 // Configure SharedWith as JSON conversion
                 entity.Property(d => d.SharedWith)
@@ -153,8 +150,7 @@ namespace InternAttendenceSystem.Data
                           new ValueComparer<List<Guid>>(
                               (c1, c2) => c1 != null && c2 != null && c1.SequenceEqual(c2),
                               c => c != null ? c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())) : 0,
-                              c => c != null ? c.ToList() : new List<Guid>()))
-                      .HasColumnType("nvarchar(max)");
+                              c => c != null ? c.ToList() : new List<Guid>()));
             });
 
             // Configure Intern entity
